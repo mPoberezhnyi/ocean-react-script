@@ -1,9 +1,20 @@
 import React from 'react'
+import WithStoreService from '../hoc/WithStoreService'
 
-const CategoryList = () => {
+const CategoryList = ({storeService: { categories }}) => {
 	return (
-		<div>Category list...</div>
+		<React.Fragment>
+			<div>Category list...</div>
+			{
+				categories.map((item, index) => {
+					return <p key={index}>
+						{item}
+					</p>
+				})
+			}
+		</React.Fragment>
+
 	)
 }
 
-export default CategoryList
+export default WithStoreService()(CategoryList)
