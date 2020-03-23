@@ -18,7 +18,6 @@ export default function App() {
 				<Route path="/" component={ HomePage } exact />
 				<Route path="/categories/:categoryName"
 					   render={({match}) => {
-						   console.log('ff', match);
 						   const { categoryName } = match.params;
 						   return <ProductsList categoryName={categoryName} />
 					   }} />
