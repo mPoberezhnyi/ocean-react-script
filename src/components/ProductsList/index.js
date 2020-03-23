@@ -34,7 +34,7 @@ const mapStateToProps = (products) => {
 	return products
 }
 
-const mapDispatchToProps = (dispatch, storeService) => {
+const mapDispatchToProps = (dispatch, {storeService}) => {
 	return bindActionCreators({
 		fetchProducts: fetchProducts(storeService)
 	}, dispatch)
