@@ -17,12 +17,10 @@ class CategoriesList extends Component {
 		const categoriesList = categories.map((item, index) => {
 			return <p key={index}>{ item }</p>
 		})
-		const { categoryName } = this.props;
 
 		return (
 			<div>
 				<h2>Categories list...</h2>
-				Category name: {categoryName}
 				{categoriesList}
 			</div>
 		)
