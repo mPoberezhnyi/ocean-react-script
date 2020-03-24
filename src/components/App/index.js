@@ -10,21 +10,24 @@ import { HomePage, CategoriesPage } from '../../pages'
 export default function App() {
 
 	return (
-		<div>
-			<h1>Create project</h1>
-			<Header/>
-			<Breadcrumbs/>
-			<Switch>
-				<Route path="/" component={ HomePage } exact />
-				<Route path="/categories/:categoryName"
-					   render={({match}) => {
-						   const { categoryName } = match.params;
-						   return <ProductsList categoryName={categoryName} />
-					   }} />
-				<Route path="/categories" exact component={ CategoriesPage }/>
+		<React.Fragment>
+			<div className="content">
+				<Header/>
+				<Breadcrumbs/>
+				<div className="container main-content">
+					<Switch>
+						<Route path="/" component={ HomePage } exact />
+						<Route path="/categories/:categoryName"
+							   render={({match}) => {
+								   const { categoryName } = match.params;
+								   return <ProductsList categoryName={categoryName} />
+							   }} />
+						<Route path="/categories" exact component={ CategoriesPage }/>
 
-			</Switch>
+					</Switch>
+				</div>
+			</div>
 			<Footer/>
-		</div>
+		</React.Fragment>
 	)
 }

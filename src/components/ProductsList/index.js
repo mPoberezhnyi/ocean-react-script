@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React  from 'react'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
@@ -6,28 +6,22 @@ import withStoreService from '../hoc/WithStoreService'
 import { fetchProducts } from '../../actions'
 import { compose } from 'redux'
 
-class ProductsList extends Component {
+const ProductsList = ({ storeService: { products }, categoryName }) => {
 
-	componentDidMount() {
-		this.props.fetchProducts()
+	if (!products) {
+		return <div>fail....</div>
 	}
+	const productsList = products.map((item, index) => {
+		return <p key={index}>{ item.name }</p>
+	});
 
-	render() {
-
-		const { storeService: { products } } = this.props;
-		const productsList = products.map((item, index) => {
-			return <p key={index}>{ item.name }</p>
-		})
-		const { categoryName } = this.props;
-
-		return (
-			<div>
-				<h2>Products list...</h2>
-				Category name: {categoryName}
-				{productsList}
-			</div>
-		)
-	}
+	return (
+		<div>
+			<h2>Products list...</h2>
+			Category name: {categoryName}
+			{productsList}
+		</div>
+	)
 }
 
 const mapStateToProps = (products) => {

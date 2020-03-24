@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom'
 
 import withStoreService from '../hoc/WithStoreService'
 import { fetchCategories } from '../../actions'
@@ -15,7 +16,11 @@ class CategoriesList extends Component {
 	render() {
 		const { storeService: { categories } } = this.props;
 		const categoriesList = categories.map((item, index) => {
-			return <p key={index}>{ item }</p>
+			return (
+				<div key={index}>
+					<Link to={`/categories/${item}`}>{ item }</Link>
+				</div>
+			)
 		})
 
 		return (
