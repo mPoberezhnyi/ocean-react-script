@@ -1,4 +1,4 @@
-import React  from 'react'
+import React, { useEffect }  from 'react'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
@@ -6,7 +6,11 @@ import withStoreService from '../hoc/WithStoreService'
 import { fetchProducts } from '../../actions'
 import { compose } from 'redux'
 
-const ProductsList = ({ storeService: { products }, categoryName }) => {
+const ProductsList = ({ products, categoryName, fetchProducts }) => {
+
+	useEffect(() => {
+		fetchProducts()
+	}, [])
 
 	if (!products) {
 		return <div>fail....</div>
