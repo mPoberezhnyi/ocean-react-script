@@ -1,29 +1,35 @@
-import React, { useEffect }  from 'react'
+import React, { useEffect } from 'react'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import ProductsItem from '../ProductsItem'
 
 import withStoreService from '../hoc/WithStoreService'
 import { fetchProducts } from '../../actions'
 import { compose } from 'redux'
 
+import './style.css'
+
 const ProductsList = ({ products, categoryName, fetchProducts }) => {
 
 	useEffect(() => {
 		fetchProducts()
-	}, [])
+	}, [fetchProducts])
 
 	if (!products) {
 		return <div>fail....</div>
 	}
 	const productsList = products.map((item, index) => {
-		return <p key={index}>{ item.name }</p>
+		return <ProductsItem key={index}
+							 item={item} />
 	});
 
 	return (
 		<div>
 			<h2>Products list...</h2>
 			Category name: {categoryName}
-			{productsList}
+			<div className="products-list">
+				{productsList}
+			</div>
 		</div>
 	)
 }

@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useEffect } from 'react'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom'
@@ -7,29 +7,31 @@ import withStoreService from '../hoc/WithStoreService'
 import { fetchCategories } from '../../actions'
 import { compose } from 'redux'
 
-class CategoriesList extends Component {
+const CategoriesList = ({ categories, fetchCategories }) => {
 
-	componentDidMount() {
-		this.props.fetchCategories()
+	useEffect(() => {
+		fetchCategories()
+		}, [fetchCategories])
+
+
+	if (!categories || !categories.length) {
+		return <div>fail....</div>
 	}
 
-	render() {
-		const { storeService: { categories } } = this.props;
-		const categoriesList = categories.map((item, index) => {
-			return (
-				<div key={index}>
-					<Link to={`/categories/${item}`}>{ item }</Link>
-				</div>
-			)
-		})
-
+	const categoriesList = categories.map((item, index) => {
 		return (
-			<div>
-				<h2>Categories list...</h2>
-				{categoriesList}
+			<div key={index}>
+				<Link to={`/categories/${item.name}`}>{ item.name }</Link>
 			</div>
 		)
-	}
+	})
+
+	return (
+		<div>
+			<h2>Categories list...</h2>
+			{categoriesList}
+		</div>
+	)
 }
 
 const mapStateToProps = (categories) => {
