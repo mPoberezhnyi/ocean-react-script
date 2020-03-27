@@ -3,6 +3,7 @@ import Header from '../Header'
 import Footer from '../Footer'
 import Breadcrumbs from '../Breadcrumbs'
 import ProductsList from '../ProductsList'
+import Product from '../../pages/product-page'
 
 import { Switch, Route } from 'react-router-dom'
 import { HomePage, CategoriesPage } from '../../pages'
@@ -23,6 +24,11 @@ export default function App() {
 								   return <ProductsList categoryName={categoryName} />
 							   }} />
 						<Route path="/categories" exact component={ CategoriesPage }/>
+						<Route path="/clothes/:id"
+							   render={({match}) => {
+								   const { id } = match.params;
+								   return <Product id={id} />
+							   }} />
 
 					</Switch>
 				</div>

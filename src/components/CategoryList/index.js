@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom'
 
 import withStoreService from '../hoc/WithStoreService'
 import { fetchCategories } from '../../actions'
 import { compose } from 'redux'
+import CategoriesItem from "../CategoriesItem";
+import './style.css'
 
 const CategoriesList = ({ categories, fetchCategories }) => {
 
@@ -20,16 +21,16 @@ const CategoriesList = ({ categories, fetchCategories }) => {
 
 	const categoriesList = categories.map((item, index) => {
 		return (
-			<div key={index}>
-				<Link to={`/categories/${item.name}`}>{ item.name }</Link>
-			</div>
+			<CategoriesItem key={index} item={item} />
 		)
 	})
 
 	return (
 		<div>
 			<h2>Categories list...</h2>
-			{categoriesList}
+			<div className="category-list">
+				{categoriesList}
+			</div>
 		</div>
 	)
 }

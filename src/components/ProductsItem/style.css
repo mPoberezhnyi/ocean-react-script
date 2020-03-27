@@ -1,0 +1,19 @@
+.product {
+	display: flex;
+	flex-direction: column;
+	width: 33.3333%;
+	padding: 0 8px;
+	margin-bottom: 40px;
+}
+
+.product-img {
+	width: 100%;
+}
+
+.product-name {
+	text-align: center;
+}
+
+.product-price {
+	font-weight: bold;
+}
