@@ -3,31 +3,38 @@ import Header from '../Header'
 import Footer from '../Footer'
 import Breadcrumbs from '../Breadcrumbs'
 import ProductsList from '../ProductsList'
+import Product from '../../pages/product-page'
 
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-import { HomePage, CategoriesPage } from '../../pages'
+import { Switch, Route } from 'react-router-dom'
+import { HomePage, CategoriesPage, CartPage } from '../../pages'
 
 export default function App() {
 
 	return (
-		<div>
-			<Router>
-				<h1>Create project</h1>
+		<React.Fragment>
+			<div className="content">
 				<Header/>
 				<Breadcrumbs/>
-				<Switch>
-					<Route path="/" component={ HomePage } exact />
-					<Route path="/categories/:categoryName"
-						   render={({match}) => {
-							   console.log('ff', match);
-							   const { categoryName } = match.params;
-							   return <ProductsList categoryName={categoryName} />
-						   }} />
-					<Route path="/categories" exact component={ CategoriesPage }/>
+				<div className="container main-content">
+					<Switch>
+						<Route path="/" component={ HomePage } exact />
+						<Route path="/categories/:categoryName"
+							   render={({match}) => {
+								   const { categoryName } = match.params;
+								   return <ProductsList categoryName={categoryName} />
+							   }} />
+						<Route path="/categories" exact component={ CategoriesPage }/>
+						<Route path="/clothes/:id"
+							   render={({match}) => {
+								   const { id } = match.params;
+								   return <Product id={id} />
+							   }} />
+						<Route path="/cart" exact component={ CartPage }/>
 
-				</Switch>
-				<Footer/>
-			</Router>
-		</div>
+					</Switch>
+				</div>
+			</div>
+			<Footer/>
+		</React.Fragment>
 	)
 }

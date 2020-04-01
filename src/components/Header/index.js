@@ -1,17 +1,23 @@
 import React from 'react'
 import Navigation from '../Navigation'
 import CartSmall from '../CartSmall'
+import { Link } from 'react-router-dom'
 import './style.css'
 
 const Header = () => {
 	return (
-		<header className="header">
-			<div className="logo">
-				logo
-			</div>
-			<Navigation />
-			<CartSmall />
-		</header>
+		<div className="container">
+			<header className="header">
+				<Link to="/">
+					<div className="logo">
+						Ocean
+					</div>
+				</Link>
+
+				<Navigation />
+				<CartSmall />
+			</header>
+		</div>
 	)
 }
 

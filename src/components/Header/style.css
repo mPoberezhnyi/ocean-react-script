@@ -3,4 +3,10 @@
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
+	height: 82px;
+}
+
+.logo {
+	font-family: 'Mr De Haviland', cursive;
+	font-size: 60px;
 }
