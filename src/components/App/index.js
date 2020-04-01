@@ -6,7 +6,7 @@ import ProductsList from '../ProductsList'
 import Product from '../../pages/product-page'
 
 import { Switch, Route } from 'react-router-dom'
-import { HomePage, CategoriesPage } from '../../pages'
+import { HomePage, CategoriesPage, CartPage } from '../../pages'
 
 export default function App() {
 
@@ -29,6 +29,7 @@ export default function App() {
 								   const { id } = match.params;
 								   return <Product id={id} />
 							   }} />
+						<Route path="/cart" exact component={ CartPage }/>
 
 					</Switch>
 				</div>

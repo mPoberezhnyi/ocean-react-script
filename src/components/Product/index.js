@@ -1,21 +1,35 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux';
 import './style.css'
+import {bindActionCreators, compose} from "redux";
+import {fetchProduct} from "../../actions";
+import withStoreService from "../hoc/WithStoreService";
 
-const Product = ({id, products}) => {
+const Product = ({id, product, fetchProduct}) => {
 
-	const choseProduct = products.find(item => item._id === id)
+	useEffect(() => {
+		fetchProduct(id)
+	}, [fetchProduct, id])
 
 	return (
 		<div className="product">
-			<img src={choseProduct.galery.split(',')[0]} alt=""/>
+			{/*<img src={product.galery.split(',')[0]} alt=""/>*/}
 		</div>
 	)
 }
 
-const mapStateToProps = (products) => {
-	return products
+const mapStateToProps = (product) => {
+	return product
 }
 
-export default connect(mapStateToProps)(Product)
+const mapDispatchToProps = (dispatch, {storeService}, id) => {
+	return bindActionCreators({
+		fetchProduct: fetchProduct(storeService, id)
+	}, dispatch)
+}
+
+export default compose(
+	withStoreService(),
+	connect(mapStateToProps, mapDispatchToProps)
+)(Product)
 

@@ -1,0 +1,10 @@
+.cart-list {
+	width: 100%;
+	border: 1px solid;
+	border-collapse: collapse;
+}
+
+.cart-cell {
+	border: 1px solid;
+	border-collapse: collapse;
+}

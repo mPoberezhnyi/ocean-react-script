@@ -1,10 +1,8 @@
 import React, { useEffect } from 'react'
-import { bindActionCreators } from 'redux';
+import { bindActionCreators, compose } from 'redux';
 import { connect } from 'react-redux';
-
 import withStoreService from '../hoc/WithStoreService'
 import { fetchCategories } from '../../actions'
-import { compose } from 'redux'
 import CategoriesItem from "../CategoriesItem";
 import './style.css'
 

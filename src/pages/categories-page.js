@@ -4,7 +4,7 @@ import CategoryList from '../components/CategoryList'
 const CategoriesPage = () => {
 	return (
 		<div>
-			Categories page...
+			<h1>Categories page...</h1>
 			<CategoryList />
 		</div>
 	)

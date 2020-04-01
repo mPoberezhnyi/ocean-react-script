@@ -88,4 +88,8 @@ export default class StoreService {
 	getProducts() {
 		return axios.get(`${MAIN_DOMAIN}/products`)
 	}
+
+	getProduct(id) {
+		return axios.get(`${MAIN_DOMAIN}/products/${id}`)
+	}
 }
