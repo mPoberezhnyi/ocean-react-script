@@ -92,4 +92,14 @@ export default class StoreService {
 	getProduct(id) {
 		return axios.get(`${MAIN_DOMAIN}/products/${id}`)
 	}
+
+	register(form) {
+		console.log('form: ', form)
+		return axios.post(`${MAIN_DOMAIN}/auth/register`, form)
+	}
+
+	login(form) {
+		console.log('service: ', form)
+		return axios.post(`${MAIN_DOMAIN}/auth/login`, form)
+	}
 }

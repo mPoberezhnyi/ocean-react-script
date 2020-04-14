@@ -1,23 +1,36 @@
-import React from 'react'
+import React, { Fragment } from 'react'
+import { connect } from 'react-redux'
 import Header from '../Header'
 import Footer from '../Footer'
 import Breadcrumbs from '../Breadcrumbs'
 import ProductsList from '../ProductsList'
 import Product from '../../pages/product-page'
+import './style.css'
 
 import { Switch, Route } from 'react-router-dom'
-import { HomePage, CategoriesPage, CartPage } from '../../pages'
+import {
+	HomePage,
+	CategoriesPage,
+	CartPage,
+	RegisterPage,
+	LoginPage,
+	AboutPage,
+	ContactsPage,
+	FaqPage,
+	NewsPage } from '../../pages'
 
-export default function App() {
+const App = () => {
 
 	return (
-		<React.Fragment>
+		<Fragment>
 			<div className="content">
 				<Header/>
 				<Breadcrumbs/>
 				<div className="container main-content">
 					<Switch>
 						<Route path="/" component={ HomePage } exact />
+						<Route path="/register" component={ RegisterPage }/>
+						<Route path="/login" component={ LoginPage }/>
 						<Route path="/categories/:categoryName"
 							   render={({match}) => {
 								   const { categoryName } = match.params;
@@ -30,11 +43,16 @@ export default function App() {
 								   return <Product id={id} />
 							   }} />
 						<Route path="/cart" exact component={ CartPage }/>
-
+						<Route path="/about" exact component={ AboutPage }/>
+						<Route path="/contacts" exact component={ ContactsPage }/>
+						<Route path="/faq" exact component={ FaqPage }/>
+						<Route path="/news" exact component={ NewsPage }/>
 					</Switch>
 				</div>
 			</div>
 			<Footer/>
-		</React.Fragment>
+		</Fragment>
 	)
 }
+
+export default App

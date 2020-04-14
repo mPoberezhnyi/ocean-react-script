@@ -10,3 +10,17 @@
 	font-family: 'Mr De Haviland', cursive;
 	font-size: 60px;
 }
+
+.header__right-panel {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-end;
+	align-items: center;
+	color: #2f7dfc;
+}
+
+.header__right-panel .header__link {
+	margin-right: 16px;
+	font-weight: bold;
+	cursor: pointer;
+}

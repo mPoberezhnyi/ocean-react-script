@@ -18,10 +18,10 @@ const Footer = () => {
 				<div className="footer-col">
 					<h4 className="footer-col-title">Company</h4>
 					<ul className="footer-col-list">
-						<li className="footer-col-item"><Link>About</Link></li>
-						<li className="footer-col-item"><Link>News</Link></li>
-						<li className="footer-col-item"><Link>FAQ</Link></li>
-						<li className="footer-col-item"><Link>Contact</Link></li>
+						<li className="footer-col-item"><Link to="/about">About</Link></li>
+						<li className="footer-col-item"><Link to="/news">News</Link></li>
+						<li className="footer-col-item"><Link to="/faq">FAQ</Link></li>
+						<li className="footer-col-item"><Link to="/contacts">Contact</Link></li>
 					</ul>
 				</div>
 
