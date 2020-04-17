@@ -2,9 +2,7 @@ import React from 'react'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { addToCart } from "../../actions";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCartPlus } from '@fortawesome/free-solid-svg-icons'
-import './style.css'
+import { Button } from 'react-bootstrap';
 
 const AddToCart = ({ item, addToCart }) => {
 
@@ -13,10 +11,7 @@ const AddToCart = ({ item, addToCart }) => {
 	}
 
 	return (
-		<div className="addToCart"
-			 onClick={onClickHandler}>
-			<FontAwesomeIcon icon={faCartPlus} />
-		</div>
+		<Button variant="primary" onClick={onClickHandler}>Add to cart</Button>
 	)
 }
 

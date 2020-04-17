@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import ProductsItem from '../ProductsItem'
-
+import { CardDeck } from 'react-bootstrap';
 import withStoreService from '../hoc/WithStoreService'
 import { fetchProducts } from '../../actions'
 import { compose } from 'redux'
@@ -12,8 +12,8 @@ import './style.css'
 const ProductsList = ({ products, categoryName, fetchProducts }) => {
 
 	useEffect(() => {
-		fetchProducts()
-	}, [fetchProducts])
+		fetchProducts(categoryName)
+	}, [fetchProducts, categoryName])
 
 	if (!products) {
 		return <div>fail....</div>
@@ -27,9 +27,9 @@ const ProductsList = ({ products, categoryName, fetchProducts }) => {
 		<div>
 			<h2>Products list...</h2>
 			Category name: {categoryName}
-			<div className="products-list">
+			<CardDeck>
 				{productsList}
-			</div>
+			</CardDeck>
 		</div>
 	)
 }
@@ -38,9 +38,9 @@ const mapStateToProps = (products) => {
 	return products
 }
 
-const mapDispatchToProps = (dispatch, {storeService}) => {
+const mapDispatchToProps = (dispatch, {storeService}, name) => {
 	return bindActionCreators({
-		fetchProducts: fetchProducts(storeService)
+		fetchProducts: fetchProducts(storeService, name)
 	}, dispatch)
 }
 

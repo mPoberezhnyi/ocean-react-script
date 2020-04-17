@@ -1,14 +1,16 @@
 import React from 'react'
-import './style.css'
+import { Breadcrumb } from 'react-bootstrap';
 
 const Breadcrumbs = () => {
 
 	return (
-		<div className="breadcrumbs">
-			<div className="container">
-				breadcrumbs...
-			</div>
-		</div>
+		<Breadcrumb>
+			<Breadcrumb.Item href="/">Home</Breadcrumb.Item>
+			<Breadcrumb.Item href="/">
+				Library
+			</Breadcrumb.Item>
+			<Breadcrumb.Item active>Data</Breadcrumb.Item>
+		</Breadcrumb>
 	)
 }
 

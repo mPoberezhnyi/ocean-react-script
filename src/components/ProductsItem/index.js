@@ -1,43 +1,22 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Link } from 'react-router-dom'
 import AddToCart from '../AddToCart'
-import './style.css'
+import { Card } from 'react-bootstrap';
 
 const ProductsItem = ({ item }) => {
 
-	console.log('fghjkl=========', item)
-
-	const [isHoverProduct, setIsHoverProduct] = useState(false)
-
-	const addProductToCart = isHoverProduct ? <div className="product-add">
-		<AddToCart item={item}/>
-	</div> : <div></div>
-
-	const onMouseEnterHandler = () => {
-		setIsHoverProduct(true)
-	}
-
-	const onMouseLeaveHandler = () => {
-		setIsHoverProduct(false)
-	}
-
 	return (
-		<div className="product"
-			 onMouseEnter={ onMouseEnterHandler }
-			 onMouseLeave={ onMouseLeaveHandler }>
-			<div className="product-img-wrap">
-				{ addProductToCart }
-				<img src={item.gallery[0]}
-					 alt={item.name}
-					 className="product-img" />
-			</div>
-			<div className="product-name">
+		<Card style={{ width: '18rem' }}>
+			<Card.Img variant="top" src={item.gallery[0]} />
+			<Card.Body>
 				<Link to={`/clothes/${item._id}`}>
-					<h5>{ item.name }</h5>
+					<Card.Title>{item.name}</Card.Title>
 				</Link>
-				<p className="product-price">{item.price}</p>
-			</div>
-		</div>
+				<Card.Text>{item.price.regular}</Card.Text>
+				<Card.Text>{item.price.sale}</Card.Text>
+				<AddToCart item={item}/>
+			</Card.Body>
+		</Card>
 	)
 }
 

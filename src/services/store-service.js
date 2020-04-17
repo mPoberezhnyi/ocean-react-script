@@ -7,6 +7,10 @@ export default class StoreService {
 		return axios.get(`${MAIN_DOMAIN}/categories`)
 	}
 
+	getCategory(name) {
+		return axios.get(`${MAIN_DOMAIN}/categories/${name}`)
+	}
+
 	getProducts() {
 		return axios.get(`${MAIN_DOMAIN}/products`)
 	}
@@ -16,12 +20,10 @@ export default class StoreService {
 	}
 
 	register(form) {
-		console.log('form: ', form)
 		return axios.post(`${MAIN_DOMAIN}/auth/register`, form)
 	}
 
 	login(form) {
-		console.log('service: ', form)
 		return axios.post(`${MAIN_DOMAIN}/auth/login`, form)
 	}
 }

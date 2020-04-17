@@ -13,6 +13,12 @@ const productsLoaded = (newProducts) => {
 	}
 }
 
+const productReqsted = () => {
+	return {
+		type: 'FETCH_PRODUCT_REQUEST'
+	}
+}
+
 const productLoaded = (newProduct) => {
 	return {
 		type: 'FETCH_PRODUCT_SUCCESS',
@@ -33,15 +39,16 @@ const categoriesLoaded = (newCategories) => {
 	}
 }
 
-const fetchProducts = (storeService) => () => (dispatch) => {
+const fetchProducts = (storeService) => (name) => (dispatch) => {
 	dispatch(productsReqsted())
-	storeService.getProducts()
+	storeService.getCategory(name)
 		.then(({data}) => {
 			dispatch(productsLoaded(data))
 		})
 }
 
-const fetchProduct = (storeService, id) => () => (dispatch) => {
+const fetchProduct = (storeService) => (id) => (dispatch) => {
+	dispatch(productReqsted())
 	storeService.getProduct(id)
 		.then(({data}) => {
 			dispatch(productLoaded(data))

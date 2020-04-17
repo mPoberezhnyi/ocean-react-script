@@ -5,9 +5,10 @@ import Footer from '../Footer'
 import Breadcrumbs from '../Breadcrumbs'
 import ProductsList from '../ProductsList'
 import Product from '../../pages/product-page'
+import { Container } from 'react-bootstrap';
 import './style.css'
 
-import { Switch, Route, Redirect } from 'react-router-dom'
+import { Switch, Route } from 'react-router-dom'
 import {
 	HomePage,
 	CategoriesPage,
@@ -34,7 +35,7 @@ const App = ({user}) => {
 			<div className="content">
 				<Header/>
 				<Breadcrumbs/>
-				<div className="container main-content">
+				<Container className="main-content">
 					<Switch>
 						<Route path="/" component={ HomePage } exact />
 						<Route path="/categories/:categoryName"
@@ -55,7 +56,7 @@ const App = ({user}) => {
 						<Route path="/news" exact component={ NewsPage }/>
 						{links}
 					</Switch>
-				</div>
+				</Container>
 			</div>
 			<Footer/>
 		</Fragment>

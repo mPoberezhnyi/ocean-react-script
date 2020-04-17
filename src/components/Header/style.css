@@ -1,26 +1,5 @@
-.header {
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	align-items: center;
-	height: 82px;
-}
-
 .logo {
 	font-family: 'Mr De Haviland', cursive;
-	font-size: 60px;
-}
-
-.header__right-panel {
-	display: flex;
-	flex-direction: row;
-	justify-content: flex-end;
-	align-items: center;
-	color: #2f7dfc;
-}
-
-.header__right-panel .header__link {
-	margin-right: 16px;
-	font-weight: bold;
-	cursor: pointer;
+	font-size: 48px;
+	line-height: 1.2;
 }

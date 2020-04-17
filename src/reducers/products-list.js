@@ -10,9 +10,6 @@ const UpdateProductsList = (state, action) => {
 		case 'FETCH_PRODUCTS_SUCCESS':
 			return action.payload;
 
-		case 'FETCH_PRODUCT_SUCCESS':
-			return action.payload;
-
 		default:
 			return state;
 	}
