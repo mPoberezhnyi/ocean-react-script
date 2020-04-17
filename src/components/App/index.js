@@ -7,7 +7,7 @@ import ProductsList from '../ProductsList'
 import Product from '../../pages/product-page'
 import './style.css'
 
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, Redirect } from 'react-router-dom'
 import {
 	HomePage,
 	CategoriesPage,
@@ -17,9 +17,17 @@ import {
 	AboutPage,
 	ContactsPage,
 	FaqPage,
-	NewsPage } from '../../pages'
+	NewsPage,
+	ProfilePage } from '../../pages'
 
-const App = () => {
+const App = ({user}) => {
+
+	const links = user.isAuthenticated ? <Fragment>
+			<Route path="/user" component={ ProfilePage }/>
+		</Fragment> : <Fragment>
+			<Route path="/register" component={ RegisterPage }/>
+			<Route path="/login" component={ LoginPage }/>
+		</Fragment>
 
 	return (
 		<Fragment>
@@ -29,8 +37,6 @@ const App = () => {
 				<div className="container main-content">
 					<Switch>
 						<Route path="/" component={ HomePage } exact />
-						<Route path="/register" component={ RegisterPage }/>
-						<Route path="/login" component={ LoginPage }/>
 						<Route path="/categories/:categoryName"
 							   render={({match}) => {
 								   const { categoryName } = match.params;
@@ -47,6 +53,7 @@ const App = () => {
 						<Route path="/contacts" exact component={ ContactsPage }/>
 						<Route path="/faq" exact component={ FaqPage }/>
 						<Route path="/news" exact component={ NewsPage }/>
+						{links}
 					</Switch>
 				</div>
 			</div>
@@ -55,4 +62,10 @@ const App = () => {
 	)
 }
 
-export default App
+const mapStateToProps = ({user}) => {
+	return {
+		user
+	}
+}
+
+export default connect(mapStateToProps)(App)

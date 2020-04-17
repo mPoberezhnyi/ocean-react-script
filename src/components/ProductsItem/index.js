@@ -5,7 +5,7 @@ import './style.css'
 
 const ProductsItem = ({ item }) => {
 
-	const galery = item.galery.split(',');
+	console.log('fghjkl=========', item)
 
 	const [isHoverProduct, setIsHoverProduct] = useState(false)
 
@@ -27,7 +27,7 @@ const ProductsItem = ({ item }) => {
 			 onMouseLeave={ onMouseLeaveHandler }>
 			<div className="product-img-wrap">
 				{ addProductToCart }
-				<img src={galery[0]}
+				<img src={item.gallery[0]}
 					 alt={item.name}
 					 className="product-img" />
 			</div>
