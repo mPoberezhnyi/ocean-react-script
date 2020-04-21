@@ -53,9 +53,6 @@ const App = ({user}) => {
 						<Route path="/faq" exact component={ FaqPage }/>
 						<Route path="/news" exact component={ NewsPage }/>
 						{links}
-						<Route render={() => {
-							return <h1>-------------hjkl</h1>
-						}}/>
 					</Switch>
 				</Container>
 			</div>
