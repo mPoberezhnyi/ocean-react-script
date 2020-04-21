@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import { Nav, NavDropdown } from 'react-bootstrap';
 import './style.css'
 import {fetchCategories} from "../../actions";
@@ -6,7 +6,7 @@ import {bindActionCreators, compose} from "redux";
 import {connect} from "react-redux";
 import withStoreService from "../hoc/WithStoreService";
 
-const Navigation = ({ categories, fetchCategories }) => {
+const Navigation = ({ categories: { categoriesList, loading }, fetchCategories }) => {
 
 	useEffect(() => {
 		fetchCategories()
@@ -14,19 +14,21 @@ const Navigation = ({ categories, fetchCategories }) => {
 
 	let dropdown = (<span></span>)
 
-	if (categories && categories.length) {
-		dropdown = <NavDropdown title="Products">
-			{categories.map(
+	if (!loading && categoriesList && categoriesList.length) {
+		dropdown = <Fragment>
+			{categoriesList.map(
 				({name}, index) =>
 					<NavDropdown.Item key={index} href={`/categories/${name}`}>{name}</NavDropdown.Item>
 			)}
-		</NavDropdown>
+		</Fragment>
 	}
 
 	return (
 		<Nav className="mr-auto">
 			<Nav.Link href="/">Home</Nav.Link>
-			{ dropdown }
+			<NavDropdown title="Products">
+				{ dropdown }
+			</NavDropdown>
 			<Nav.Link href="/blog">Blog</Nav.Link>
 			<Nav.Link href="/contacts">Contacts</Nav.Link>
 		</Nav>

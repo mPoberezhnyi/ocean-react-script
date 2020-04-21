@@ -1,5 +1,4 @@
 import HomePage from './home-page'
-import CategoriesPage from './categories-page'
 import CartPage from './cart-page'
 import RegisterPage from './register-page'
 import LoginPage from './login-page'
@@ -11,7 +10,6 @@ import NewsPage from './footer-navigation/news-page'
 
 export {
 	HomePage,
-	CategoriesPage,
 	CartPage,
 	RegisterPage,
 	LoginPage,

@@ -11,7 +11,6 @@ import './style.css'
 import { Switch, Route } from 'react-router-dom'
 import {
 	HomePage,
-	CategoriesPage,
 	CartPage,
 	RegisterPage,
 	LoginPage,
@@ -43,7 +42,6 @@ const App = ({user}) => {
 								   const { categoryName } = match.params;
 								   return <ProductsList categoryName={categoryName} />
 							   }} />
-						<Route path="/categories" exact component={ CategoriesPage }/>
 						<Route path="/clothes/:id"
 							   render={({match}) => {
 								   const { id } = match.params;
@@ -55,6 +53,9 @@ const App = ({user}) => {
 						<Route path="/faq" exact component={ FaqPage }/>
 						<Route path="/news" exact component={ NewsPage }/>
 						{links}
+						<Route render={() => {
+							return <h1>-------------hjkl</h1>
+						}}/>
 					</Switch>
 				</Container>
 			</div>
