@@ -1,14 +1,23 @@
 const UpdateCategoriesList = (state, action) => {
 	if (state === undefined) {
-		return []
+		return {
+			categoriesList: [],
+			loading: true
+		}
 	}
 
 	switch (action.type) {
 		case 'FETCH_CATEGORIES_REQUEST':
-			return [];
+			return {
+				categoriesList: [],
+				loading: true
+			};
 
 		case 'FETCH_CATEGORIES_SUCCESS':
-			return action.payload;
+			return {
+				categoriesList: action.payload,
+				loading: false
+			};
 
 		default:
 			return state;

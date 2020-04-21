@@ -22,10 +22,10 @@ const updateCartItems = (cartItems, item, idx) => {
 
 const itemToCartFormat = (product, count) => {
 
-	const price = product.price || 0
+	const price = product.price.sale || product.price.regular || 0
 
 	return {
-		id: product._id || product.id,
+		id: product._id,
 		title: product.name || product.title,
 		count: count,
 		price,

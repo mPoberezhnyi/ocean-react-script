@@ -2,12 +2,10 @@ import React, { useState } from 'react'
 import { bindActionCreators, compose } from 'redux'
 import { connect } from 'react-redux'
 import WithStoreService from '../components/hoc/WithStoreService'
-// import { useAuth } from '../hooks/auth.hook'
 import { loginUser } from '../actions'
+import { Button, Spinner } from 'react-bootstrap'
 
-const LoginPage = ({ loginUser }) => {
-
-	// const { login, logout, token, userId, ready } = useAuth()
+const LoginPage = ({ loginUser, user: { loading } }) => {
 
 	const [form, setForm] = useState({
 		email: '',
@@ -39,13 +37,28 @@ const LoginPage = ({ loginUser }) => {
 					   className="auth-input"
 					   value={form.password}
 					   onChange={onInputChangeHandler}/>
-				<input type="submit"
-					   className="auth-button"
-					   value="Login" />
+				<Button variant="primary"
+						block
+						disabled={loading}
+						type="submit">
+					{
+						loading ? <Spinner
+							as="span"
+							animation="border"
+							size="sm"
+							role="status"
+							aria-hidden="true"
+						/> : 'Login'
+					}
+				</Button>
 			</form>
 
 		</div>
 	)
+}
+
+const mapStateToProps = (user) => {
+	return user
 }
 
 const mapDispatchToProps = (dispatch, {storeService}) => {
@@ -56,5 +69,5 @@ const mapDispatchToProps = (dispatch, {storeService}) => {
 
 export default compose(
 	WithStoreService(),
-	connect(null, mapDispatchToProps)
+	connect(mapStateToProps, mapDispatchToProps)
 )(LoginPage)
