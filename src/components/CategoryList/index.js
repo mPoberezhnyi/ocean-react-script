@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import withStoreService from '../hoc/WithStoreService'
 import { fetchCategories } from '../../actions'
 import CategoriesItem from "../CategoriesItem";
+// import Categories from '../../containers/Categories'
 import './style.css'
 
 const CategoriesList = ({ categories, fetchCategories }) => {
@@ -47,3 +48,5 @@ export default compose(
 	withStoreService(),
 	connect(mapStateToProps, mapDispatchToProps)
 )(CategoriesList)
+
+// export default Categories()(CategoriesList)

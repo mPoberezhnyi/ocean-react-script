@@ -1,3 +1,5 @@
+import { USER_INFO_IN_LOCALSTORAGE } from '../constants/actions'
+
 const productsReqsted = () => {
 	return {
 		type: 'FETCH_PRODUCTS_REQUEST'
@@ -34,23 +36,23 @@ const categoriesLoaded = (newCategories) => {
 const fetchProducts = (storeService) => () => (dispatch) => {
 	dispatch(productsReqsted())
 	storeService.getProducts()
-		.then(data => {
-			dispatch(productsLoaded(data.data))
+		.then(({data}) => {
+			dispatch(productsLoaded(data))
 		})
 }
 
 const fetchProduct = (storeService, id) => () => (dispatch) => {
 	storeService.getProduct(id)
-		.then(data => {
-			dispatch(productLoaded(data.data))
+		.then(({data}) => {
+			dispatch(productLoaded(data))
 		})
 }
 
 const fetchCategories = (storeService) => () => (dispatch) => {
 	dispatch(categoriesReqsted())
 	storeService.getCategories()
-		.then(data => {
-			dispatch(categoriesLoaded(data.data))
+		.then(({data}) => {
+			dispatch(categoriesLoaded(data))
 		})
 }
 
@@ -77,11 +79,62 @@ const removeAllFromCart = () => (product) => (dispatch) => {
 	})
 }
 
+//auth
+
+const userRegistred = (userInfo) => {
+	return {
+		type: 'REGISTERED_USER',
+		payload: userInfo
+	}
+}
+
+const userLogined = (userInfo) => {
+	return {
+		type: 'LOGINED_USER',
+		payload: userInfo
+	}
+}
+
+const userLogout = () => {
+	return {
+		type: 'LOGOUT_USER'
+	}
+}
+
+const registerUser = (storeService) => (payload) => async (dispatch) => {
+	try {
+		const { data } = await storeService.register(payload)
+		dispatch(userRegistred(data))
+	}
+	catch ({message}) {
+		console.log('Server error: ', message)
+	}
+}
+
+const loginUser = (storeService) => (payload) => async (dispatch) => {
+	try {
+		const { data } = await storeService.login(payload)
+		localStorage.setItem(USER_INFO_IN_LOCALSTORAGE, JSON.stringify(data))
+		dispatch(userLogined(data))
+	}
+	catch ({message}) {
+		console.log('Server error: ', message)
+	}
+}
+
+const logoutUser = () => () => (dispatch) => {
+	localStorage.removeItem(USER_INFO_IN_LOCALSTORAGE)
+	dispatch(userLogout())
+}
+
 export {
 	fetchProducts,
 	fetchProduct,
 	fetchCategories,
 	addToCart,
 	removeFromCart,
-	removeAllFromCart
+	removeAllFromCart,
+	registerUser,
+	loginUser,
+	logoutUser
 }

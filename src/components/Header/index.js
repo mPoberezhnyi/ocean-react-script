@@ -1,6 +1,7 @@
 import React from 'react'
 import Navigation from '../Navigation'
 import CartSmall from '../CartSmall'
+import UserInfoInHeader from '../UserInfoInHeader'
 import { Link } from 'react-router-dom'
 import './style.css'
 
@@ -13,9 +14,11 @@ const Header = () => {
 						Ocean
 					</div>
 				</Link>
-
 				<Navigation />
-				<CartSmall />
+				<div className="header__right-panel">
+					<UserInfoInHeader />
+					<CartSmall />
+				</div>
 			</header>
 		</div>
 	)

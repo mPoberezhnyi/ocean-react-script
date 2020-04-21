@@ -32,4 +32,3 @@ export default compose(
 	withStoreService(),
 	connect(mapStateToProps, mapDispatchToProps)
 )(Product)
-
