@@ -3,8 +3,9 @@ import { bindActionCreators, compose } from 'redux'
 import { connect } from 'react-redux'
 import WithStoreService from '../components/hoc/WithStoreService'
 import { registerUser } from '../actions'
+import { Button, Spinner } from 'react-bootstrap'
 
-const RegisterPage = ({ registerUser }) => {
+const RegisterPage = ({ registerUser, user: { loading } }) => {
 
 	const [form, setForm] = useState({
 		email: '',
@@ -36,13 +37,28 @@ const RegisterPage = ({ registerUser }) => {
 					   className="auth-input"
 					   value={form.password}
 					   onChange={onInputChangeHandler}/>
-				<input type="submit"
-					   className="auth-button"
-					   value="Register" />
+				<Button variant="primary"
+						block
+						disabled={loading}
+						type="submit">
+					{
+						loading ? <Spinner
+							as="span"
+							animation="border"
+							size="sm"
+							role="status"
+							aria-hidden="true"
+						/> : 'Register'
+					}
+				</Button>
 			</form>
 
 		</div>
 	)
+}
+
+const mapStateToProps = (user) => {
+	return user
 }
 
 const mapDispatchToProps = (dispatch, {storeService}) => {
@@ -53,5 +69,5 @@ const mapDispatchToProps = (dispatch, {storeService}) => {
 
 export default compose(
 	WithStoreService(),
-	connect(null, mapDispatchToProps)
+	connect(mapStateToProps, mapDispatchToProps)
 )(RegisterPage)

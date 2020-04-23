@@ -5,38 +5,42 @@ import Footer from '../Footer'
 import Breadcrumbs from '../Breadcrumbs'
 import ProductsList from '../ProductsList'
 import Product from '../../pages/product-page'
-import './style.css'
-
+import { Container } from 'react-bootstrap';
 import { Switch, Route } from 'react-router-dom'
 import {
 	HomePage,
-	CategoriesPage,
 	CartPage,
 	RegisterPage,
 	LoginPage,
 	AboutPage,
 	ContactsPage,
 	FaqPage,
-	NewsPage } from '../../pages'
+	NewsPage,
+	ProfilePage } from '../../pages'
+import './style.css'
 
-const App = () => {
+const App = ({user}) => {
+
+	const links = user.isAuthenticated ? <Fragment>
+			<Route path="/user" component={ ProfilePage }/>
+		</Fragment> : <Fragment>
+			<Route path="/register" component={ RegisterPage }/>
+			<Route path="/login" component={ LoginPage }/>
+		</Fragment>
 
 	return (
 		<Fragment>
 			<div className="content">
 				<Header/>
 				<Breadcrumbs/>
-				<div className="container main-content">
+				<Container className="main-content">
 					<Switch>
 						<Route path="/" component={ HomePage } exact />
-						<Route path="/register" component={ RegisterPage }/>
-						<Route path="/login" component={ LoginPage }/>
 						<Route path="/categories/:categoryName"
 							   render={({match}) => {
 								   const { categoryName } = match.params;
 								   return <ProductsList categoryName={categoryName} />
 							   }} />
-						<Route path="/categories" exact component={ CategoriesPage }/>
 						<Route path="/clothes/:id"
 							   render={({match}) => {
 								   const { id } = match.params;
@@ -47,12 +51,19 @@ const App = () => {
 						<Route path="/contacts" exact component={ ContactsPage }/>
 						<Route path="/faq" exact component={ FaqPage }/>
 						<Route path="/news" exact component={ NewsPage }/>
+						{links}
 					</Switch>
-				</div>
+				</Container>
 			</div>
 			<Footer/>
 		</Fragment>
 	)
 }
 
-export default App
+const mapStateToProps = ({user}) => {
+	return {
+		user
+	}
+}
+
+export default connect(mapStateToProps)(App)

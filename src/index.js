@@ -5,11 +5,10 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import StoreService from './services/store-service'
 import { StoreServiceProvider } from './components/StoreServiceContext'
 import ErrorBoundary from './components/ErrorBoundary';
-import App from './components/App';
-import 'normalize.css'
-import './style.css'
-
 import store from './store'
+import App from './components/App';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './style.css'
 
 const storeService = new StoreService();
 

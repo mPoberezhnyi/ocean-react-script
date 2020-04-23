@@ -3,19 +3,19 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons'
-import { addToCart, removeFromCart, removeAllFromCart } from '../../actions'
-import './style.css'
+import { addToCart, incrementCartItem, decrementCartItem, removeAllFromCart } from '../../actions'
+import { Table, Button } from 'react-bootstrap';
 
-const CartList = ({ products, cartTotal, addToCart, removeFromCart, removeAllFromCart }) => {
+const CartList = ({ products, cartTotal, addToCart, incrementCartItem, decrementCartItem, removeAllFromCart }) => {
 
-	const renderCartRow = (index, item ) => {
+	const renderCartRow = (index, item) => {
 
 		const minusCartCount = () => {
-			removeFromCart(item)
+			decrementCartItem(item)
 		}
 
 		const plusCartCount = () => {
-			addToCart(item)
+			incrementCartItem(item)
 		}
 
 		const removeCartItem = () => {
@@ -24,21 +24,25 @@ const CartList = ({ products, cartTotal, addToCart, removeFromCart, removeAllFro
 
 		return (
 			<tr className="cart-row"
-				key={item.id}>
-				<td className="cart-cell">{item.index}</td>
-				<td className="cart-cell">{item.title}</td>
+				key={`${item.id}_${index}`}>
+				<td className="cart-cell">{index+1}</td>
+				<td className="cart-cell">{item.name}</td>
+				<td className="cart-cell">{item.size}</td>
 				<td className="cart-cell">{item.price}</td>
 				<td className="cart-cell">
-					<FontAwesomeIcon icon={faMinus}
-									 onClick={minusCartCount} />
+					<Button variant="light" onClick={minusCartCount}>
+						<FontAwesomeIcon icon={faMinus} />
+					</Button>
 					{item.count} pcs
-					<FontAwesomeIcon icon={faPlus}
-									 onClick={plusCartCount} />
+					<Button variant="light" onClick={plusCartCount}>
+						<FontAwesomeIcon icon={faPlus} />
+					</Button>
 				</td>
 				<td className="cart-cell">{item.total}</td>
 				<td className="cart-cell">
-					<FontAwesomeIcon icon={faTimes}
-									 onClick={removeCartItem} />
+					<Button variant="danger" onClick={removeCartItem}>
+						<FontAwesomeIcon icon={faTimes} />
+					</Button>
 				</td>
 			</tr>
 		)
@@ -55,31 +59,31 @@ const CartList = ({ products, cartTotal, addToCart, removeFromCart, removeAllFro
 	return (
 		<React.Fragment>
 			{
-				cartList.length ? <table className="cart-list">
+				cartList.length ? <Table bordered>
 					<thead>
-					<tr className="cart-row">
-						<td className="cart-cell">#</td>
-						<td className="cart-cell">Title</td>
-						<td className="cart-cell">Price</td>
-						<td className="cart-cell">Count</td>
-						<td className="cart-cell">Total price</td>
-						<td className="cart-cell">Remove</td>
-					</tr>
+						<tr>
+							<th>#</th>
+							<th>Name</th>
+							<th>Size</th>
+							<th>Price</th>
+							<th>Count</th>
+							<th>Total price</th>
+							<th></th>
+						</tr>
 					</thead>
 					<tbody>
-					{cartList}
+						{cartList}
+						<tr>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td></td>
+							<td>{cartTotal}</td>
+							<td></td>
+						</tr>
 					</tbody>
-					<tfoot>
-					<tr className="cart-row">
-						<td className="cart-cell"></td>
-						<td className="cart-cell"></td>
-						<td className="cart-cell"></td>
-						<td className="cart-cell"></td>
-						<td className="cart-cell">{cartTotal}</td>
-						<td className="cart-cell"></td>
-					</tr>
-					</tfoot>
-				</table> : <h2>No items...</h2>
+				</Table> : <h2>No items...</h2>
 			}
 		</React.Fragment>
 	)
@@ -95,7 +99,8 @@ const mapStateToProps = ({shoppingCart: { orderList, cartTotal }}) => {
 const mapDispatchToProps = () => (dispatch) => {
 	return bindActionCreators({
 		addToCart: addToCart(),
-		removeFromCart: removeFromCart(),
+		incrementCartItem: incrementCartItem(),
+		decrementCartItem: decrementCartItem(),
 		removeAllFromCart: removeAllFromCart()
 	}, dispatch)
 }

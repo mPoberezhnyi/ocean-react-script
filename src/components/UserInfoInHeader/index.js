@@ -1,34 +1,25 @@
 import React, { Fragment } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Nav, NavDropdown, Button } from 'react-bootstrap';
 import { logoutUser } from '../../actions'
 
 const UserInfoInHeader = ({user, logout}) => {
 
 	console.log('user: ', user, !!user.token)
 
-	const links = <Fragment>
-		<Link to="/login" className="header__link">
-			signin
-		</Link>
-		<Link to="/register" className="header__link">
-			signup
-		</Link>
-	</Fragment>
-
 	return <Fragment>
 		{
-			user.isAuthenticated ? <Fragment>
-				<Link to="/user"
-					  className="header__link">
-					{ user.email }
-				</Link>
-				<span className="header__link"
-					  onClick={logout}>
+			user.isAuthenticated ? <NavDropdown title={user.email}>
+				<NavDropdown.Item href="/user">Profile</NavDropdown.Item>
+				<NavDropdown.Divider />
+				<Button variant="light" block onClick={logout}>
 					Logout
-				</span>
-			</Fragment> : links
+				</Button>
+			</NavDropdown> : <Fragment>
+				<Nav.Link href="/login">login</Nav.Link>
+				<Nav.Link href="/register">register</Nav.Link>
+			</Fragment>
 		}
 	</Fragment>
 }
