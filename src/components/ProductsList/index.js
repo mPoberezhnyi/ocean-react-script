@@ -2,12 +2,10 @@ import React, { useEffect } from 'react'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import ProductsItem from '../ProductsItem'
-import { CardDeck } from 'react-bootstrap';
 import withStoreService from '../hoc/WithStoreService'
 import { fetchProducts } from '../../actions'
 import { compose } from 'redux'
-
-import './style.css'
+import { Title, ProductsGrid } from './styled'
 
 const ProductsList = ({ products, categoryName, fetchProducts }) => {
 
@@ -25,11 +23,10 @@ const ProductsList = ({ products, categoryName, fetchProducts }) => {
 
 	return (
 		<div>
-			<h2>Products list...</h2>
-			Category name: {categoryName}
-			<CardDeck>
+			<Title>{categoryName}</Title>
+			<ProductsGrid>
 				{productsList}
-			</CardDeck>
+			</ProductsGrid>
 		</div>
 	)
 }

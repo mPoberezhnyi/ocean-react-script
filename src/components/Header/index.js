@@ -2,15 +2,19 @@ import React from 'react'
 import Navigation from '../Navigation'
 import CartSmall from '../CartSmall'
 import UserInfoInHeader from '../UserInfoInHeader'
+import { Link } from 'react-router-dom'
 import { Navbar, Nav } from 'react-bootstrap';
 import './style.css'
 
 const Header = () => {
 	return (
 		<Navbar bg="primary" variant="dark">
-			<Navbar.Brand href="/">
-				<div className="logo">Ocean</div>
-			</Navbar.Brand>
+			<div className="logo">
+				<Link to="/">
+					Ocean
+				</Link>
+			</div>
+
 			<Navigation />
 			<Nav>
 				<UserInfoInHeader />

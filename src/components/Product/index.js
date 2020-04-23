@@ -1,10 +1,17 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux';
-import './style.css'
 import {bindActionCreators, compose} from "redux";
 import {fetchProduct} from "../../actions";
+import AddToCart from '../AddToCart'
+import ProductPrice from '../ProductPrice'
 import withStoreService from "../hoc/WithStoreService";
-import { Row, Col, Carousel, Form } from 'react-bootstrap';
+import { Row, Col, Carousel } from 'react-bootstrap';
+import styled from 'styled-components'
+
+const Description = styled.p`
+	display: inline-block;
+	margin-top: 2rem;
+`
 
 const Product = ({id, product, fetchProduct}) => {
 
@@ -36,25 +43,10 @@ const Product = ({id, product, fetchProduct}) => {
 			</Col>
 			<Col>
 				<h2>{product.name}</h2>
-				<h4>
-					Price
-					{product.price.regular}UAH
-					{ product.price.sale ? `${product.price.sale}UAH` : '' }
-				</h4>
-
-				<Form>
-					<Form.Group controlId="exampleForm.SelectCustom">
-						<Form.Label>Sizes</Form.Label>
-						<Form.Control as="select" custom>
-							{
-								product.availableSizes.map((item, index) => <option key={index}>{item}</option>)
-							}
-						</Form.Control>
-					</Form.Group>
-
-				</Form>
-
-				<p>{product.description}</p>
+				<h4>Price:</h4>
+				<ProductPrice price={product.price}/>
+				<AddToCart item={product}/>
+				<Description>{product.description}</Description>
 			</Col>
 		</Row>
 	)

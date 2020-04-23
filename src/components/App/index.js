@@ -6,8 +6,6 @@ import Breadcrumbs from '../Breadcrumbs'
 import ProductsList from '../ProductsList'
 import Product from '../../pages/product-page'
 import { Container } from 'react-bootstrap';
-import './style.css'
-
 import { Switch, Route } from 'react-router-dom'
 import {
 	HomePage,
@@ -19,6 +17,7 @@ import {
 	FaqPage,
 	NewsPage,
 	ProfilePage } from '../../pages'
+import './style.css'
 
 const App = ({user}) => {
 
