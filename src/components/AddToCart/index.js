@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { addToCart } from "../../actions";
@@ -19,8 +19,6 @@ const AddToCart = (
 		addToCart
 	}) => {
 
-	console.log(regular, sale)
-
 	const price = sale || regular
 
 	const [cartItem, setCartItem] = useState({
@@ -32,17 +30,37 @@ const AddToCart = (
 		total: price * count
 	})
 
+	useEffect(() => {
+		setCartItem({
+			id: _id,
+			name,
+			size: availableSizes[0],
+			count: count,
+			price,
+			total: price * count
+		})
+	}, [_id, name, availableSizes, price, count])
+
 	const onSubmitHandler = (e) => {
 		e.preventDefault()
-		console.log(cartItem)
-		// addToCart(cartItem)
+		addToCart(cartItem)
 	}
 
-	const onChangeHandler = ({target: { name, value }}) => {
-		console.log(name, value)
+	const sizeOnChangeHandler = ({target: { value }}) => {
 		setCartItem({
 			...cartItem,
-			[name]: value
+			size: value
+		})
+	}
+
+	const countOnChangeHandler = ({target: { value }}) => {
+
+		const count = parseFloat(value)
+
+		setCartItem({
+			...cartItem,
+			count,
+			total: count * cartItem.price
 		})
 	}
 
@@ -52,7 +70,7 @@ const AddToCart = (
 				<Form.Label>Sizes</Form.Label>
 				<Form.Control as="select"
 							  name="size"
-							  onChange={onChangeHandler}>
+							  onChange={sizeOnChangeHandler}>
 					{
 						availableSizes.map((item, index) => <option key={index}>
 								{ item }
@@ -68,7 +86,7 @@ const AddToCart = (
 					name="count"
 					min="1"
 					value={cartItem.count}
-					onChange={onChangeHandler}
+					onChange={countOnChangeHandler}
 				/>
 			</Form.Group>
 

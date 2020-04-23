@@ -1,4 +1,12 @@
+import {
+	ADDED_PRODUCT,
+	DECREMENT_CART_ITEM,
+	INCREMENT_CART_ITEM,
+	REMOVED_ALL_PRODUCTS
+} from "../constants/actions";
+
 const updateCartItems = (cartItems, item, idx) => {
+
 	if (item.count < 1) {
 		return [
 			...cartItems.slice(0, idx),
@@ -20,47 +28,28 @@ const updateCartItems = (cartItems, item, idx) => {
 	];
 };
 
-const itemToCartFormat = (product, count) => {
+const updateCartItem = (oldItem, newItem) => ({
+	...oldItem,
+	count: parseFloat(oldItem.count) + parseFloat(newItem.count),
+	total: parseFloat(oldItem.total) + parseFloat(newItem.total)
+})
 
-	const price = product.price.sale || product.price.regular || 0
+const updateCart = (state, product) => {
 
-	return {
-		id: product._id,
-		title: product.name,
-		count: count,
-		price,
-		total: price * count
-	}
-}
+	const orderIndex = state.orderList.findIndex(item => item.id === product.id && item.size === product.size)
 
-const updateCartItem = (product, count) => {
-
-	const newCount = product.count + count
-
-	return {
-		...product,
-		count: newCount,
-		total: product.price * newCount
-	}
-}
-
-const updateCart = (state, product, count) => {
-
-	let newOrder = itemToCartFormat(product, count);
-
-	const orderIndex = state.orderList.findIndex(item => item.id === newOrder.id)
+	let newProduct = {...product}
 
 	if (orderIndex !== -1) {
-		const oldItem = state.orderList.find(({id}) => id === newOrder.id )
-		newOrder = updateCartItem(oldItem, count)
+		const oldProduct = state.orderList[orderIndex]
+		newProduct = updateCartItem(oldProduct, newProduct)
 	}
 
 	return {
-		orderList: updateCartItems(state.orderList, newOrder, orderIndex),
-		cartTotal: newOrder.price * count + state.cartTotal,
-		cartCount: state.cartCount + count
+		orderList: updateCartItems(state.orderList, newProduct, orderIndex),
+		cartTotal: state.cartTotal + parseFloat(product.total),
+		cartCount: state.cartCount + parseFloat(product.count)
 	}
-
 }
 
 const ShoppingCart = (state, action) => {
@@ -74,18 +63,29 @@ const ShoppingCart = (state, action) => {
 
 	switch (action.type) {
 
-		// case 'CART_LOADING':
-		// 	return
+		case ADDED_PRODUCT:
+			return updateCart(state, action.payload)
 
-		case 'ADDED_PRODUCT':
-			return updateCart(state, action.payload, 1);
+		case INCREMENT_CART_ITEM:
+			return updateCart(state, {
+				...action.payload,
+				count: 1,
+				total: action.payload.price
+			});
 
-		case 'REMOVED_PRODUCT':
-			return updateCart(state, action.payload, -1);
+		case DECREMENT_CART_ITEM:
+			return updateCart(state, {
+				...action.payload,
+				count: -1,
+				total: -action.payload.price
+			});
 
-		case 'REMOVED_ALL_PRODUCTS':
-			const item = state.orderList.find(({id}) => id === action.payload.id);
-			return updateCart(state, action.payload, -item.count);
+		case REMOVED_ALL_PRODUCTS:
+			return updateCart(state, {
+				...action.payload,
+				count: -action.payload.count,
+				total: -(action.payload.count * action.payload.price)
+			});
 
 		default:
 			return state;
