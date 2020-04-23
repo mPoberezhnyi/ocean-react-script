@@ -26,7 +26,7 @@ const itemToCartFormat = (product, count) => {
 
 	return {
 		id: product._id,
-		title: product.name || product.title,
+		title: product.name,
 		count: count,
 		price,
 		total: price * count
@@ -73,6 +73,9 @@ const ShoppingCart = (state, action) => {
 	}
 
 	switch (action.type) {
+
+		// case 'CART_LOADING':
+		// 	return
 
 		case 'ADDED_PRODUCT':
 			return updateCart(state, action.payload, 1);
