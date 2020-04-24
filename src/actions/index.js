@@ -165,14 +165,19 @@ const getProfileFetch = (storeService) => () => async (dispatch) => {
 	try {
 		dispatch(AuthRequest(true))
 		const userDate = JSON.parse(localStorage.getItem(USER_INFO_IN_LOCALSTORAGE));
-		if (userDate && userDate.refreshToken) {
-			const { data: { token } } = await storeService.updateToken(userDate.refreshToken)
-			const newUserData = {
-				...userDate,
-				token
+
+		if (userDate) {
+			const {data: { isUser } } = await storeService.getProfile(userDate.token)
+
+			if (!isUser) {
+				const { data: { token } } = await storeService.updateToken(userDate.refreshToken)
+				const newUserData = {
+					...userDate,
+					token
+				}
+				localStorage.setItem(USER_INFO_IN_LOCALSTORAGE, JSON.stringify(newUserData))
+				dispatch(userLogined(newUserData))
 			}
-			localStorage.setItem(USER_INFO_IN_LOCALSTORAGE, JSON.stringify(newUserData))
-			dispatch(userLogined(newUserData))
 		}
 		dispatch(AuthRequest(false))
 
