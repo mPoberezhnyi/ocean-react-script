@@ -27,13 +27,13 @@ export default class StoreService {
 		return axios.post(`${MAIN_DOMAIN}/auth/login`, form)
 	}
 
-	// getProfile(token) {
-	// 	return axios.get(`${MAIN_DOMAIN}/auth/profile`, {
-	// 		headers: {
-	// 			'Authorization': `Bearer ${token}`
-	// 		}
-	// 	})
-	// }
+	getProfile(token) {
+		return axios.get(`${MAIN_DOMAIN}/auth/profile`, {
+			headers: {
+				'Authorization': `Bearer ${token}`
+			}
+		})
+	}
 
 	updateToken(token) {
 		return axios.post(`${MAIN_DOMAIN}/auth/token`, {
