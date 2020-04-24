@@ -161,9 +161,39 @@ const loginUser = (storeService) => (payload) => async (dispatch) => {
 	}
 }
 
-const logoutUser = () => () => (dispatch) => {
-	localStorage.removeItem(USER_INFO_IN_LOCALSTORAGE)
-	dispatch(userLogout())
+const getProfileFetch = (storeService) => () => async (dispatch) => {
+	try {
+		dispatch(AuthRequest(true))
+		const userDate = JSON.parse(localStorage.getItem(USER_INFO_IN_LOCALSTORAGE));
+		if (userDate && userDate.refreshToken) {
+			const { data: { token } } = await storeService.updateToken(userDate.refreshToken)
+			const newUserData = {
+				...userDate,
+				token
+			}
+			localStorage.setItem(USER_INFO_IN_LOCALSTORAGE, JSON.stringify(newUserData))
+			dispatch(userLogined(newUserData))
+		}
+		dispatch(AuthRequest(false))
+
+	} catch ({message}) {
+		localStorage.removeItem(USER_INFO_IN_LOCALSTORAGE)
+		dispatch(userLogout())
+		console.log('Server error: ', message)
+	}
+}
+
+const logoutUser = (storeService) => () => async (dispatch) => {
+	try {
+		const { refreshToken } = JSON.parse(localStorage.getItem(USER_INFO_IN_LOCALSTORAGE));
+		const { message } = await storeService.logoutUser(refreshToken)
+		localStorage.removeItem(USER_INFO_IN_LOCALSTORAGE)
+		dispatch(userLogout())
+		console.log(message)
+	}
+	catch ({message}) {
+		console.log('Server error: ', message)
+	}
 }
 
 export {
@@ -176,5 +206,6 @@ export {
 	removeAllFromCart,
 	registerUser,
 	loginUser,
+	getProfileFetch,
 	logoutUser
 }

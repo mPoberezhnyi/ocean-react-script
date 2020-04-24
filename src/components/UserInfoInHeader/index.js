@@ -1,12 +1,11 @@
 import React, { Fragment } from 'react'
-import { bindActionCreators } from 'redux'
+import { bindActionCreators, compose } from 'redux'
 import { connect } from 'react-redux'
+import WithStoreService from '../hoc/WithStoreService'
 import { Nav, NavDropdown, Button } from 'react-bootstrap';
 import { logoutUser } from '../../actions'
 
 const UserInfoInHeader = ({user, logout}) => {
-
-	console.log('user: ', user, !!user.token)
 
 	return <Fragment>
 		{
@@ -28,10 +27,13 @@ const mapStateToProps = ({user}) => {
 	return {user}
 }
 
-const mapDispatchToProps = () => (dispatch) => {
+const mapDispatchToProps = () => (dispatch, {storeService}) => {
 	return bindActionCreators({
-		logout: logoutUser()
+		logout: logoutUser(storeService)
 	}, dispatch)
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserInfoInHeader)
+export default compose(
+	WithStoreService(),
+	connect(mapStateToProps, mapDispatchToProps)
+)(UserInfoInHeader)
