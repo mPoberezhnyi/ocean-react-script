@@ -7,12 +7,12 @@ import {
 	FETCH_CATEGORIES_REQUEST,
 	FETCH_CATEGORIES_SUCCESS,
 	ADDED_PRODUCT,
-	REMOVED_PRODUCT,
 	REMOVED_ALL_PRODUCTS,
 	AUTH_REQUEST,
 	REGISTERED_USER,
 	LOGINED_USER,
-	LOGOUT_USER } from '../constants/actions'
+	LOGOUT_USER, INCREMENT_CART_ITEM, DECREMENT_CART_ITEM
+} from '../constants/actions'
 
 const productsRequest = () => {
 	return {
@@ -86,9 +86,16 @@ const addToCart = () => (product) => (dispatch) => {
 	})
 }
 
-const removeFromCart = () => (product) => (dispatch) => {
+const incrementCartItem = () => (product) => (dispatch) => {
 	dispatch({
-		type: REMOVED_PRODUCT,
+		type: INCREMENT_CART_ITEM,
+		payload: product
+	})
+}
+
+const decrementCartItem = () => (product) => (dispatch) => {
+	dispatch({
+		type: DECREMENT_CART_ITEM,
 		payload: product
 	})
 }
@@ -164,7 +171,8 @@ export {
 	fetchProduct,
 	fetchCategories,
 	addToCart,
-	removeFromCart,
+	incrementCartItem,
+	decrementCartItem,
 	removeAllFromCart,
 	registerUser,
 	loginUser,

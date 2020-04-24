@@ -3,21 +3,19 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimes, faPlus, faMinus } from '@fortawesome/free-solid-svg-icons'
-import { addToCart, removeFromCart, removeAllFromCart } from '../../actions'
+import { addToCart, incrementCartItem, decrementCartItem, removeAllFromCart } from '../../actions'
 import { Table, Button } from 'react-bootstrap';
 
-const CartList = ({ products, cartTotal, addToCart, removeFromCart, removeAllFromCart }) => {
+const CartList = ({ products, cartTotal, addToCart, incrementCartItem, decrementCartItem, removeAllFromCart }) => {
 
-	console.log(products)
-
-	const renderCartRow = (index, item ) => {
+	const renderCartRow = (index, item) => {
 
 		const minusCartCount = () => {
-			removeFromCart(item)
+			decrementCartItem(item)
 		}
 
 		const plusCartCount = () => {
-			addToCart(item)
+			incrementCartItem(item)
 		}
 
 		const removeCartItem = () => {
@@ -26,9 +24,10 @@ const CartList = ({ products, cartTotal, addToCart, removeFromCart, removeAllFro
 
 		return (
 			<tr className="cart-row"
-				key={item.id}>
-				<td className="cart-cell">{item.index}</td>
-				<td className="cart-cell">{item.title}</td>
+				key={`${item.id}_${index}`}>
+				<td className="cart-cell">{index+1}</td>
+				<td className="cart-cell">{item.name}</td>
+				<td className="cart-cell">{item.size}</td>
 				<td className="cart-cell">{item.price}</td>
 				<td className="cart-cell">
 					<Button variant="light" onClick={minusCartCount}>
@@ -65,6 +64,7 @@ const CartList = ({ products, cartTotal, addToCart, removeFromCart, removeAllFro
 						<tr>
 							<th>#</th>
 							<th>Name</th>
+							<th>Size</th>
 							<th>Price</th>
 							<th>Count</th>
 							<th>Total price</th>
@@ -74,6 +74,7 @@ const CartList = ({ products, cartTotal, addToCart, removeFromCart, removeAllFro
 					<tbody>
 						{cartList}
 						<tr>
+							<td></td>
 							<td></td>
 							<td></td>
 							<td></td>
@@ -98,7 +99,8 @@ const mapStateToProps = ({shoppingCart: { orderList, cartTotal }}) => {
 const mapDispatchToProps = () => (dispatch) => {
 	return bindActionCreators({
 		addToCart: addToCart(),
-		removeFromCart: removeFromCart(),
+		incrementCartItem: incrementCartItem(),
+		decrementCartItem: decrementCartItem(),
 		removeAllFromCart: removeAllFromCart()
 	}, dispatch)
 }
