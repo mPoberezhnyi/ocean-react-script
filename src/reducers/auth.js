@@ -11,6 +11,8 @@ const initialState = user ?
 	{ isAuthenticated: true, loading: false, ...user } :
 	{ isAuthenticated: false, loading: false };
 
+
+
 const AuthUser = (state = initialState, action) => {
 	if (state === undefined) {
 		return { isAuthenticated: false }

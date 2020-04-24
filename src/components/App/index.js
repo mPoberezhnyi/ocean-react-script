@@ -1,5 +1,6 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import { connect } from 'react-redux'
+import withStoreService from "../hoc/WithStoreService";
 import Header from '../Header'
 import Footer from '../Footer'
 import Breadcrumbs from '../Breadcrumbs'
@@ -18,8 +19,14 @@ import {
 	NewsPage,
 	ProfilePage } from '../../pages'
 import './style.css'
+import { bindActionCreators, compose } from "redux";
+import { getProfileFetch } from "../../actions";
 
-const App = ({user}) => {
+const App = ({user, getProfileFetch}) => {
+
+	useEffect(() => {
+		getProfileFetch()
+	}, [getProfileFetch])
 
 	const links = user.isAuthenticated ? <Fragment>
 			<Route path="/user" component={ ProfilePage }/>
@@ -66,4 +73,13 @@ const mapStateToProps = ({user}) => {
 	}
 }
 
-export default connect(mapStateToProps)(App)
+const mapDispatchToProps = (dispatch, {storeService}) => {
+	return bindActionCreators({
+		getProfileFetch: getProfileFetch(storeService)
+	}, dispatch)
+}
+
+export default compose(
+	withStoreService(),
+	connect(mapStateToProps, mapDispatchToProps)
+)(App)
