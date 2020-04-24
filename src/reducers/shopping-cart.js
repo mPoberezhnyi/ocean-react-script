@@ -2,7 +2,8 @@ import {
 	ADDED_PRODUCT,
 	DECREMENT_CART_ITEM,
 	INCREMENT_CART_ITEM,
-	REMOVED_ALL_PRODUCTS
+	REMOVED_ALL_PRODUCTS,
+	USER_CART_IN_LOCALSTORAGE,
 } from "../constants/actions";
 
 const updateCartItems = (cartItems, item, idx) => {
@@ -45,14 +46,27 @@ const updateCart = (state, product) => {
 		newProduct = updateCartItem(oldProduct, newProduct)
 	}
 
-	return {
+	const newCart = {
 		orderList: updateCartItems(state.orderList, newProduct, orderIndex),
 		cartTotal: state.cartTotal + parseFloat(product.total),
 		cartCount: state.cartCount + parseFloat(product.count)
 	}
+
+	localStorage.removeItem(USER_CART_IN_LOCALSTORAGE)
+	localStorage.setItem(USER_CART_IN_LOCALSTORAGE, JSON.stringify(newCart))
+
+	return newCart
 }
 
-const ShoppingCart = (state, action) => {
+let cart = JSON.parse(localStorage.getItem(USER_CART_IN_LOCALSTORAGE));
+const initialState = cart ?
+	{ ...cart } : {
+		orderList: [],
+		cartTotal: 0,
+		cartCount: 0
+	};
+
+const ShoppingCart = (state = initialState, action) => {
 	if (state === undefined) {
 		return {
 			orderList: [],
