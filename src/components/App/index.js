@@ -7,7 +7,7 @@ import Breadcrumbs from '../Breadcrumbs'
 import ProductsList from '../ProductsList'
 import Product from '../../pages/product-page'
 import { Container } from 'react-bootstrap';
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, Redirect } from 'react-router-dom'
 import {
 	HomePage,
 	CartPage,
@@ -28,12 +28,12 @@ const App = ({user, getProfileFetch}) => {
 		getProfileFetch()
 	}, [getProfileFetch])
 
-	const links = user.isAuthenticated ? <Fragment>
-			<Route path="/user" component={ ProfilePage }/>
-		</Fragment> : <Fragment>
-			<Route path="/register" component={ RegisterPage }/>
-			<Route path="/login" component={ LoginPage }/>
-		</Fragment>
+	// const links = user.isAuthenticated ? <Fragment>
+	// 		<Route path="/user" component={ ProfilePage }/>
+	// 	</Fragment> : <Fragment>
+	// 		<Route path="/register" component={ RegisterPage }/>
+	// 		<Route path="/login" component={ LoginPage }/>
+	// 	</Fragment>
 
 	return (
 		<Fragment>
@@ -58,7 +58,15 @@ const App = ({user, getProfileFetch}) => {
 						<Route path="/contacts" exact component={ ContactsPage }/>
 						<Route path="/faq" exact component={ FaqPage }/>
 						<Route path="/news" exact component={ NewsPage }/>
-						{links}
+						<Route path="/user" exact>
+							{user.isAuthenticated ? <ProfilePage /> : <Redirect to="/login" />}
+						</Route>
+						<Route path="/register" >
+							{user.isAuthenticated ?  <Redirect to="/" /> : <RegisterPage /> }
+						</Route>
+						<Route path="/login">
+							{user.isAuthenticated ?  <Redirect to="/" /> : <LoginPage /> }
+						</Route>
 					</Switch>
 				</Container>
 			</div>
