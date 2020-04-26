@@ -28,13 +28,6 @@ const App = ({user, getProfileFetch}) => {
 		getProfileFetch()
 	}, [getProfileFetch])
 
-	// const links = user.isAuthenticated ? <Fragment>
-	// 		<Route path="/user" component={ ProfilePage }/>
-	// 	</Fragment> : <Fragment>
-	// 		<Route path="/register" component={ RegisterPage }/>
-	// 		<Route path="/login" component={ LoginPage }/>
-	// 	</Fragment>
-
 	return (
 		<Fragment>
 			<div className="content">
