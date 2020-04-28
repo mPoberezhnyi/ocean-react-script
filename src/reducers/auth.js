@@ -11,8 +11,6 @@ const initialState = user ?
 	{ isAuthenticated: true, loading: false, ...user } :
 	{ isAuthenticated: false, loading: false };
 
-
-
 const AuthUser = (state = initialState, action) => {
 	if (state === undefined) {
 		return { isAuthenticated: false }
@@ -28,8 +26,8 @@ const AuthUser = (state = initialState, action) => {
 		case REGISTERED_USER:
 			return {
 				...state,
-				loading: false,
-				...action.payload
+				user: {...action.payload},
+				loading: false
 			}
 
 		case LOGINED_USER:

@@ -4,11 +4,13 @@ import ProductsItem from './products-item'
 import UpdateCategoriesList from './categories-list'
 import shoppingCart from './shopping-cart'
 import AuthUser from './auth'
+import Message from './message'
 
 export default combineReducers({
 	products: UpdateProductsList,
 	product: ProductsItem,
 	categories: UpdateCategoriesList,
 	shoppingCart: shoppingCart,
-	user: AuthUser
+	user: AuthUser,
+	message: Message
 })

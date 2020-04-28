@@ -3,43 +3,92 @@ import { bindActionCreators, compose } from 'redux'
 import { connect } from 'react-redux'
 import WithStoreService from '../components/hoc/WithStoreService'
 import { registerUser } from '../actions'
-import { Button, Spinner } from 'react-bootstrap'
+import { Form, Button, Spinner } from 'react-bootstrap'
+import { Redirect } from 'react-router-dom'
 
-const RegisterPage = ({ registerUser, user: { loading } }) => {
+const initialState = {
+	name: '',
+	email: '',
+	password: '',
+	rePassword: ''
+}
 
-	const [form, setForm] = useState({
-		email: '',
-		password: ''
-	})
+const RegisterPage = ({ registerUser, user: { loading, user } }) => {
+
+	const [form, setForm] = useState(initialState)
+
+	if (user && user.email) {
+		return <Redirect to="/login" />
+	}
 
 	const onSubmitHandler = (e) => {
 		e.preventDefault()
-		registerUser(form)
+		registerUser({
+			name: form.name,
+			email: form.email,
+			password: form.password
+		})
 	}
 
-	const onInputChangeHandler = (e) => {
+	const onInputChangeHandler = ({target: { name, value }}) => {
 		setForm({
 			...form,
-			[e.target.name]: e.target.value
+			[name]: value
 		})
 	}
 
 	return (
 		<div className="auth">
-			<form className="auth-form" onSubmit={onSubmitHandler}>
-				<input type="email"
-					   name="email"
-					   className="auth-input"
-					   value={form.email}
-					   onChange={onInputChangeHandler}/>
-				<input type="password"
-					   name="password"
-					   className="auth-input"
-					   value={form.password}
-					   onChange={onInputChangeHandler}/>
+			<Form className="auth-form"
+				  onSubmit={onSubmitHandler}>
+				<Form.Group>
+					<Form.Label>Username</Form.Label>
+					<Form.Control
+						type="text"
+						placeholder="Please enter username"
+						name="name"
+						value={form.name}
+						onChange={onInputChangeHandler}
+					/>
+				</Form.Group>
+				<Form.Group>
+					<Form.Label>Email</Form.Label>
+					<Form.Control
+						type="email"
+						placeholder="Enter email"
+						name="email"
+						value={form.email}
+						onChange={onInputChangeHandler}
+					/>
+				</Form.Group>
+				<Form.Group>
+					<Form.Label>Password</Form.Label>
+					<Form.Control
+						type="password"
+						className={form.password === form.rePassword ? 'form-control' : 'form-control is-invalid'}
+						placeholder="Enter password"
+						name="password"
+						value={form.password}
+						onChange={onInputChangeHandler}
+					/>
+				</Form.Group>
+				<Form.Group>
+					<Form.Label>Repreat password</Form.Label>
+					<Form.Control
+						type="password"
+						className={form.password === form.rePassword ? 'form-control' : 'form-control is-invalid'}
+						placeholder="Repeat password"
+						name="rePassword"
+						value={form.rePassword}
+						onChange={onInputChangeHandler}
+					/>
+					<Form.Control.Feedback type="invalid">
+						Passwords do not match
+					</Form.Control.Feedback>
+				</Form.Group>
 				<Button variant="primary"
 						block
-						disabled={loading}
+						disabled={form.password !== form.rePassword}
 						type="submit">
 					{
 						loading ? <Spinner
@@ -51,7 +100,7 @@ const RegisterPage = ({ registerUser, user: { loading } }) => {
 						/> : 'Register'
 					}
 				</Button>
-			</form>
+			</Form>
 
 		</div>
 	)

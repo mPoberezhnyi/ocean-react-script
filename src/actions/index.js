@@ -11,7 +11,7 @@ import {
 	AUTH_REQUEST,
 	REGISTERED_USER,
 	LOGINED_USER,
-	LOGOUT_USER, INCREMENT_CART_ITEM, DECREMENT_CART_ITEM
+	LOGOUT_USER, INCREMENT_CART_ITEM, DECREMENT_CART_ITEM, SET_MESSAGE, CLEAR_MESSAGE
 } from '../constants/actions'
 
 const productsRequest = () => {
@@ -139,10 +139,18 @@ const userLogout = () => {
 const registerUser = (storeService) => (payload) => async (dispatch) => {
 	try {
 		dispatch(AuthRequest(true))
-		const { data } = await storeService.register(payload)
-		dispatch(userRegistred(data))
+		const { data: { email, message } } = await storeService.register(payload)
+		dispatch(userRegistred({email}))
+		dispatch(setMessage({
+			type: 'success',
+			text: message
+		}))
 	}
 	catch ({message}) {
+		dispatch(setMessage({
+			type: 'danger',
+			text: message
+		}))
 		dispatch(AuthRequest(false))
 		console.log('Server error: ', message)
 	}
@@ -191,14 +199,27 @@ const getProfileFetch = (storeService) => () => async (dispatch) => {
 const logoutUser = (storeService) => () => async (dispatch) => {
 	try {
 		const { refreshToken } = JSON.parse(localStorage.getItem(USER_INFO_IN_LOCALSTORAGE));
-		const { message } = await storeService.logoutUser(refreshToken)
+		await storeService.logoutUser(refreshToken)
 		localStorage.removeItem(USER_INFO_IN_LOCALSTORAGE)
 		dispatch(userLogout())
-		console.log(message)
 	}
 	catch ({message}) {
 		console.log('Server error: ', message)
 	}
+}
+
+//message
+const setMessage = (payload) => {
+	return {
+		type: SET_MESSAGE,
+		payload
+	}
+}
+
+const clearMessage = () => () => (dispatch) => {
+	dispatch({
+		type: CLEAR_MESSAGE
+	})
 }
 
 export {
@@ -212,5 +233,6 @@ export {
 	registerUser,
 	loginUser,
 	getProfileFetch,
-	logoutUser
+	logoutUser,
+	clearMessage
 }
