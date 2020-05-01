@@ -5,7 +5,7 @@ import ProductsItem from '../ProductsItem'
 import withStoreService from '../hoc/WithStoreService'
 import { fetchProducts } from '../../actions'
 import { compose } from 'redux'
-import { Title, ProductsGrid } from './styled'
+import { Title, ProductsGrid } from '../../globalStyled'
 
 const ProductsList = ({ products, categoryName, fetchProducts }) => {
 
@@ -16,10 +16,10 @@ const ProductsList = ({ products, categoryName, fetchProducts }) => {
 	if (!products) {
 		return <div>fail....</div>
 	}
-	const productsList = products.map((item, index) => {
-		return <ProductsItem key={index}
-							 item={item} />
-	});
+	const productsList = products.map((item, index) => (
+		<ProductsItem key={index}
+					  item={item} />
+	));
 
 	return (
 		<div>

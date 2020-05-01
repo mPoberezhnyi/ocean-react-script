@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 import { Nav, NavDropdown } from 'react-bootstrap';
-import './style.css'
 import {fetchCategories} from "../../actions";
 import {bindActionCreators, compose} from "redux";
 import {connect} from "react-redux";

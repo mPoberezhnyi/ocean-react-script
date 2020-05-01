@@ -21,13 +21,14 @@ import {
 	NewsPage,
 	ProfilePage } from '../../pages'
 import './style.css'
-import { getProfileFetch } from "../../actions";
+import { getProfileFetch, getFavorites } from "../../actions";
 
-const App = ({user, getProfileFetch}) => {
+const App = ({user, getProfileFetch, getFavorites}) => {
 
 	useEffect(() => {
 		getProfileFetch()
-	}, [getProfileFetch])
+		getFavorites()
+	}, [getProfileFetch, getFavorites])
 
 	return (
 		<Fragment>
@@ -78,7 +79,8 @@ const mapStateToProps = ({user}) => {
 
 const mapDispatchToProps = (dispatch, {storeService}) => {
 	return bindActionCreators({
-		getProfileFetch: getProfileFetch(storeService)
+		getProfileFetch: getProfileFetch(storeService),
+		getFavorites: getFavorites(storeService)
 	}, dispatch)
 }
 

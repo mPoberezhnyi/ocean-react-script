@@ -11,8 +11,15 @@ import {
 	AUTH_REQUEST,
 	REGISTERED_USER,
 	LOGINED_USER,
-	LOGOUT_USER, INCREMENT_CART_ITEM, DECREMENT_CART_ITEM, SET_MESSAGE, CLEAR_MESSAGE
+	LOGOUT_USER,
+	INCREMENT_CART_ITEM,
+	DECREMENT_CART_ITEM,
+	SET_MESSAGE,
+	CLEAR_MESSAGE,
+	GET_USER_INFO,
 } from '../constants/actions'
+
+import { addToFavorites, getFavorites, removeFromFavorites } from './favorites.actions'
 
 const productsRequest = () => {
 	return {
@@ -130,6 +137,13 @@ const userLogined = (userInfo) => {
 	}
 }
 
+const getUserInfo = (userInfo) => {
+	return {
+		type: GET_USER_INFO,
+		payload: userInfo
+	}
+}
+
 const userLogout = () => {
 	return {
 		type: LOGOUT_USER
@@ -196,6 +210,19 @@ const getProfileFetch = (storeService) => () => async (dispatch) => {
 	}
 }
 
+const getUser = (storeService) => () => async (dispatch) => {
+	try {
+		dispatch(AuthRequest(true))
+		const { token } = JSON.parse(localStorage.getItem(USER_INFO_IN_LOCALSTORAGE));
+		const { data } = await storeService.getUserInfo(token)
+		dispatch(getUserInfo(data))
+	}
+	catch ({message}) {
+		dispatch(AuthRequest(false))
+		console.log('Server error: ', message)
+	}
+}
+
 const logoutUser = (storeService) => () => async (dispatch) => {
 	try {
 		const { refreshToken } = JSON.parse(localStorage.getItem(USER_INFO_IN_LOCALSTORAGE));
@@ -222,6 +249,7 @@ const clearMessage = () => () => (dispatch) => {
 	})
 }
 
+
 export {
 	fetchProducts,
 	fetchProduct,
@@ -233,6 +261,10 @@ export {
 	registerUser,
 	loginUser,
 	getProfileFetch,
+	getUser,
 	logoutUser,
-	clearMessage
+	clearMessage,
+	addToFavorites,
+	getFavorites,
+	removeFromFavorites
 }

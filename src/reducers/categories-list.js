@@ -1,3 +1,5 @@
+import {FETCH_CATEGORIES_REQUEST, FETCH_CATEGORIES_SUCCESS} from "../constants/actions";
+
 const UpdateCategoriesList = (state, action) => {
 	if (state === undefined) {
 		return {
@@ -7,13 +9,13 @@ const UpdateCategoriesList = (state, action) => {
 	}
 
 	switch (action.type) {
-		case 'FETCH_CATEGORIES_REQUEST':
+		case FETCH_CATEGORIES_REQUEST:
 			return {
 				categoriesList: [],
 				loading: true
 			};
 
-		case 'FETCH_CATEGORIES_SUCCESS':
+		case FETCH_CATEGORIES_SUCCESS:
 			return {
 				categoriesList: action.payload,
 				loading: false

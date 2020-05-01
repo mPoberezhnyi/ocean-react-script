@@ -8,7 +8,7 @@ import { Form, Button, Spinner } from 'react-bootstrap'
 const LoginPage = ({ loginUser, user: { loading, user } }) => {
 
 	const [form, setForm] = useState({
-		email: user && user.email || '',
+		email: '',
 		password: ''
 	})
 

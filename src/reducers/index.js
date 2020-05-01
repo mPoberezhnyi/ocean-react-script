@@ -5,6 +5,7 @@ import UpdateCategoriesList from './categories-list'
 import shoppingCart from './shopping-cart'
 import AuthUser from './auth'
 import Message from './message'
+import FavoritesProducts from './favorites-products'
 
 export default combineReducers({
 	products: UpdateProductsList,
@@ -12,5 +13,6 @@ export default combineReducers({
 	categories: UpdateCategoriesList,
 	shoppingCart: shoppingCart,
 	user: AuthUser,
-	message: Message
+	message: Message,
+	favorites: FavoritesProducts
 })

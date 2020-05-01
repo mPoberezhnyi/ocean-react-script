@@ -1,5 +1,5 @@
 import {
-	AUTH_REQUEST,
+	AUTH_REQUEST, GET_USER_INFO,
 	LOGINED_USER,
 	LOGOUT_USER,
 	REGISTERED_USER,
@@ -33,6 +33,13 @@ const AuthUser = (state = initialState, action) => {
 		case LOGINED_USER:
 			return {
 				isAuthenticated: true,
+				loading: false,
+				...action.payload
+			}
+
+		case GET_USER_INFO:
+			return {
+				...state,
 				loading: false,
 				...action.payload
 			}
