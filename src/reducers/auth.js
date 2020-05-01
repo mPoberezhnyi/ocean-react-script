@@ -1,5 +1,5 @@
 import {
-	AUTH_REQUEST,
+	AUTH_REQUEST, GET_USER_INFO,
 	LOGINED_USER,
 	LOGOUT_USER,
 	REGISTERED_USER,
@@ -10,8 +10,6 @@ let user = JSON.parse(localStorage.getItem(USER_INFO_IN_LOCALSTORAGE));
 const initialState = user ?
 	{ isAuthenticated: true, loading: false, ...user } :
 	{ isAuthenticated: false, loading: false };
-
-
 
 const AuthUser = (state = initialState, action) => {
 	if (state === undefined) {
@@ -28,13 +26,20 @@ const AuthUser = (state = initialState, action) => {
 		case REGISTERED_USER:
 			return {
 				...state,
-				loading: false,
-				...action.payload
+				user: {...action.payload},
+				loading: false
 			}
 
 		case LOGINED_USER:
 			return {
 				isAuthenticated: true,
+				loading: false,
+				...action.payload
+			}
+
+		case GET_USER_INFO:
+			return {
+				...state,
 				loading: false,
 				...action.payload
 			}

@@ -1,10 +1,12 @@
 import React, { Fragment, useEffect } from 'react'
 import { connect } from 'react-redux'
+import { bindActionCreators, compose } from 'redux'
 import withStoreService from "../hoc/WithStoreService";
 import Header from '../Header'
 import Footer from '../Footer'
 import Breadcrumbs from '../Breadcrumbs'
 import ProductsList from '../ProductsList'
+import Notification from '../Notification'
 import Product from '../../pages/product-page'
 import { Container } from 'react-bootstrap';
 import { Switch, Route, Redirect } from 'react-router-dom'
@@ -19,20 +21,21 @@ import {
 	NewsPage,
 	ProfilePage } from '../../pages'
 import './style.css'
-import { bindActionCreators, compose } from "redux";
-import { getProfileFetch } from "../../actions";
+import { getProfileFetch, getFavorites } from "../../actions";
 
-const App = ({user, getProfileFetch}) => {
+const App = ({user, getProfileFetch, getFavorites}) => {
 
 	useEffect(() => {
 		getProfileFetch()
-	}, [getProfileFetch])
+		getFavorites()
+	}, [getProfileFetch, getFavorites])
 
 	return (
 		<Fragment>
 			<div className="content">
 				<Header/>
 				<Breadcrumbs/>
+				<Notification />
 				<Container className="main-content">
 					<Switch>
 						<Route path="/" component={ HomePage } exact />
@@ -76,7 +79,8 @@ const mapStateToProps = ({user}) => {
 
 const mapDispatchToProps = (dispatch, {storeService}) => {
 	return bindActionCreators({
-		getProfileFetch: getProfileFetch(storeService)
+		getProfileFetch: getProfileFetch(storeService),
+		getFavorites: getFavorites(storeService)
 	}, dispatch)
 }
 

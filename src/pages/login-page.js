@@ -3,9 +3,9 @@ import { bindActionCreators, compose } from 'redux'
 import { connect } from 'react-redux'
 import WithStoreService from '../components/hoc/WithStoreService'
 import { loginUser } from '../actions'
-import { Button, Spinner } from 'react-bootstrap'
+import { Form, Button, Spinner } from 'react-bootstrap'
 
-const LoginPage = ({ loginUser, user: { loading } }) => {
+const LoginPage = ({ loginUser, user: { loading, user } }) => {
 
 	const [form, setForm] = useState({
 		email: '',
@@ -26,17 +26,31 @@ const LoginPage = ({ loginUser, user: { loading } }) => {
 
 	return (
 		<div className="auth">
-			<form className="auth-form" onSubmit={onSubmitHandler}>
-				<input type="email"
-					   name="email"
-					   className="auth-input"
-					   value={form.email}
-					   onChange={onInputChangeHandler}/>
-				<input type="password"
-					   name="password"
-					   className="auth-input"
-					   value={form.password}
-					   onChange={onInputChangeHandler}/>
+			<Form className="auth-form"
+				  onSubmit={onSubmitHandler}>
+				<Form.Group>
+					<Form.Label>Email</Form.Label>
+					<Form.Control
+						type="email"
+						placeholder="Enter email"
+						name="email"
+						value={form.email}
+						onChange={onInputChangeHandler}
+					/>
+				</Form.Group>
+				<Form.Group>
+					<Form.Label>Password</Form.Label>
+					<Form.Control
+						type="password"
+						placeholder="Enter password"
+						name="password"
+						value={form.password}
+						onChange={onInputChangeHandler}
+					/>
+					<Form.Control.Feedback type="invalid">
+						Please choose a username.
+					</Form.Control.Feedback>
+				</Form.Group>
 				<Button variant="primary"
 						block
 						disabled={loading}
@@ -51,7 +65,7 @@ const LoginPage = ({ loginUser, user: { loading } }) => {
 						/> : 'Login'
 					}
 				</Button>
-			</form>
+			</Form>
 
 		</div>
 	)

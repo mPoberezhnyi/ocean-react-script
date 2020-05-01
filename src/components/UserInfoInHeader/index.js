@@ -2,22 +2,23 @@ import React, { Fragment } from 'react'
 import { bindActionCreators, compose } from 'redux'
 import { connect } from 'react-redux'
 import WithStoreService from '../hoc/WithStoreService'
-import { Nav, NavDropdown, Button } from 'react-bootstrap';
+import { NavDropdown, Button } from 'react-bootstrap';
 import { logoutUser } from '../../actions'
+import { Link } from 'react-router-dom'
 
 const UserInfoInHeader = ({user, logout}) => {
 
 	return <Fragment>
 		{
-			user.isAuthenticated ? <NavDropdown title={user.email}>
-				<NavDropdown.Item href="/user">Profile</NavDropdown.Item>
+			user.isAuthenticated ? <NavDropdown title={user.name || user.email}>
+				<Link className="dropdown-item" to="/user">Profile</Link>
 				<NavDropdown.Divider />
 				<Button variant="light" block onClick={logout}>
 					Logout
 				</Button>
 			</NavDropdown> : <Fragment>
-				<Nav.Link href="/login">login</Nav.Link>
-				<Nav.Link href="/register">register</Nav.Link>
+				<Link className="nav-link" to="/login">login</Link>
+				<Link className="nav-link" to="/register">register</Link>
 			</Fragment>
 		}
 	</Fragment>
