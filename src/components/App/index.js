@@ -4,7 +4,6 @@ import { bindActionCreators, compose } from 'redux'
 import withStoreService from "../hoc/WithStoreService";
 import Header from '../Header'
 import Footer from '../Footer'
-import Breadcrumbs from '../Breadcrumbs'
 import ProductsList from '../ProductsList'
 import Notification from '../Notification'
 import Product from '../../pages/product-page'
@@ -34,7 +33,6 @@ const App = ({user, getProfileFetch, getFavorites}) => {
 		<Fragment>
 			<div className="content">
 				<Header/>
-				<Breadcrumbs/>
 				<Notification />
 				<Container className="main-content">
 					<Switch>

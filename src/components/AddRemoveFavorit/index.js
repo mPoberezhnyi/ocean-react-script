@@ -3,9 +3,11 @@ import { bindActionCreators, compose } from 'redux';
 import { connect } from 'react-redux';
 import { addToFavorites, removeFromFavorites } from "../../actions";
 import withStoreService from "../hoc/WithStoreService";
-import { Button } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faHeart } from '@fortawesome/free-solid-svg-icons'
+import { faHeart as faHeartEmpty } from '@fortawesome/free-regular-svg-icons'
 
-const AddToFavorites = ({ id, favorites, removeFromFavorites, addToFavorites }) => {
+const AddRemoveFavorit = ({ id, favorites, removeFromFavorites, addToFavorites }) => {
 
 	const isFavorite = favorites.list && !!favorites.list.find(item => item._id === id)
 
@@ -13,13 +15,11 @@ const AddToFavorites = ({ id, favorites, removeFromFavorites, addToFavorites }) 
 		isFavorite ? removeFromFavorites(id) : addToFavorites(id)
 	}
 
-	return (<Button variant="primary"
-					type="button"
-					onClick={onClickHandler}>
-		{
-			isFavorite ? 'Remove from favorites' : 'Add to favorites'
-		}
-	</Button>)
+	return (<FontAwesomeIcon icon={isFavorite ? faHeart : faHeartEmpty}
+							 color={isFavorite ? 'red' : 'gray'}
+							 size="lg"
+							 className={'ml-2'}
+							 onClick={onClickHandler} />)
 }
 
 const mapStatetToProps = ({favorites}) => {
@@ -38,4 +38,4 @@ const mapDispatchToProps = () => (dispatch, {storeService}) => {
 export default compose(
 	withStoreService(),
 	connect(mapStatetToProps, mapDispatchToProps)
-)(AddToFavorites)
+)(AddRemoveFavorit)
