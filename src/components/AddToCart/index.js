@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { addToCart } from "../../actions";
 import { Button, Form } from 'react-bootstrap';
-import AddToFavorites from "../AddToFavorites";
+import AddRemoveFavorit from "../AddRemoveFavorit";
 
 const AddToCart = (
 	{
@@ -91,13 +91,13 @@ const AddToCart = (
 				/>
 			</Form.Group>
 
-			<Form.Row>
+			<div className="form-row align-items-center">
 				<Button variant="primary"
 						type="submit">
 					Add to cart
 				</Button>
-				<AddToFavorites id={cartItem.id}/>
-			</Form.Row>
+				<AddRemoveFavorit id={cartItem.id}/>
+			</div>
 		</Form>
 	)
 }

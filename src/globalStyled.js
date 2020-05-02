@@ -9,4 +9,8 @@ export const ProductsGrid = styled.div`
 export const Title = styled.h2`
 	text-align: center;
 	margin-bottom: 6rem
+	
+	&:first-letter {
+		text-transform: uppercase;
+	}
 `
