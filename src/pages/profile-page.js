@@ -4,7 +4,7 @@ import { bindActionCreators, compose } from 'redux'
 import {connect} from "react-redux";
 import WithStoreService from "../components/hoc/WithStoreService";
 import ProductsItem from '../components/ProductsItem'
-import { ProductsGrid } from '../globalStyled'
+import { ProductsGrid } from '../styled/global.styled'
 import { Spinner } from 'react-bootstrap'
 
 const ProfilePage = ({user, favorites, getUser, getFavorites}) => {

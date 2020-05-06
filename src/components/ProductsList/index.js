@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react'
-import { bindActionCreators } from 'redux';
+import { bindActionCreators, compose } from 'redux';
 import { connect } from 'react-redux';
 import ProductsItem from '../ProductsItem'
 import withStoreService from '../hoc/WithStoreService'
 import { fetchProducts } from '../../actions'
-import { compose } from 'redux'
-import { Title, ProductsGrid } from '../../globalStyled'
+import { Title, ProductsGrid } from '../../styled/global.styled'
 
 const ProductsList = ({ products, categoryName, fetchProducts }) => {
 
@@ -35,9 +34,9 @@ const mapStateToProps = (products) => {
 	return products
 }
 
-const mapDispatchToProps = (dispatch, {storeService}, name) => {
+const mapDispatchToProps = (dispatch, {storeService}) => {
 	return bindActionCreators({
-		fetchProducts: fetchProducts(storeService, name)
+		fetchProducts: fetchProducts(storeService)
 	}, dispatch)
 }
 

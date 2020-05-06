@@ -9,7 +9,8 @@ const CartSmall = ({ cartCount }) => {
 	return (
 		<Link to="/cart">
 			<div className="small-cart">
-				<FontAwesomeIcon icon={faShoppingCart} />
+				<FontAwesomeIcon icon={faShoppingCart}
+								 style={{cursor: 'pointer'}}/>
 				<div className="small-cart-count">{ cartCount }</div>
 			</div>
 		</Link>

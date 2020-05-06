@@ -4,6 +4,7 @@ import { addToCart, incrementCartItem, decrementCartItem, removeAllFromCart } fr
 import { registerUser, loginUser, getProfileFetch, getUser, logoutUser } from './auth.actions'
 import { clearMessage } from './messages.actions'
 import { addToFavorites, getFavorites, removeFromFavorites } from './favorites.actions'
+import { getComments, addComment, removeComment, editComment } from './comments.actions'
 
 export {
 	fetchProducts,
@@ -21,5 +22,9 @@ export {
 	clearMessage,
 	addToFavorites,
 	getFavorites,
-	removeFromFavorites
+	removeFromFavorites,
+	getComments,
+	addComment,
+	removeComment,
+	editComment
 }

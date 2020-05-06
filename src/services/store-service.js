@@ -82,4 +82,24 @@ export default class StoreService {
 			token
 		})
 	}
+
+	// comments
+	getComments(productId) {
+		return axios.get(`${MAIN_DOMAIN}/comments/${productId}`)
+	}
+
+	addComment(comment) {
+		return axios.post(`${MAIN_DOMAIN}/comments`, comment)
+	}
+
+	editComment(comment) {
+		return axios.put(`${MAIN_DOMAIN}/comments`, {
+			comment
+		})
+	}
+
+	removeComment(id) {
+		return axios.delete(`${MAIN_DOMAIN}/comments/${id}`)
+	}
+
 }

@@ -31,17 +31,20 @@ const CartList = ({ products, cartTotal, addToCart, incrementCartItem, decrement
 				<td className="cart-cell">{item.price}</td>
 				<td className="cart-cell">
 					<Button variant="light" onClick={minusCartCount}>
-						<FontAwesomeIcon icon={faMinus} />
+						<FontAwesomeIcon icon={faMinus}
+										 style={{cursor: 'pointer'}}/>
 					</Button>
 					{item.count} pcs
 					<Button variant="light" onClick={plusCartCount}>
-						<FontAwesomeIcon icon={faPlus} />
+						<FontAwesomeIcon icon={faPlus}
+										 style={{cursor: 'pointer'}}/>
 					</Button>
 				</td>
 				<td className="cart-cell">{item.total}</td>
 				<td className="cart-cell">
 					<Button variant="danger" onClick={removeCartItem}>
-						<FontAwesomeIcon icon={faTimes} />
+						<FontAwesomeIcon icon={faTimes}
+										 style={{cursor: 'pointer'}}/>
 					</Button>
 				</td>
 			</tr>

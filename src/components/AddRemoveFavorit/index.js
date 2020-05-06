@@ -19,6 +19,7 @@ const AddRemoveFavorit = ({ id, favorites, removeFromFavorites, addToFavorites }
 							 color={isFavorite ? 'red' : 'gray'}
 							 size="lg"
 							 className={'ml-2'}
+							 style={{cursor: 'pointer'}}
 							 onClick={onClickHandler} />)
 }
 
