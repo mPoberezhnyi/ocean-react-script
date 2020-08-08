@@ -1,15 +1,8 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import Comment from '../Comment'
-import { compose, bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
-import WithStoreService from '../hoc/WithStoreService'
-import {getComments} from '../../actions'
 
-const CommentsList = ({productId, getComments, comments: { list, loading }}) => {
 
-	useEffect(() => {
-		getComments(productId)
-	}, [getComments, productId])
+const CommentsList = ({productId, list}) => {
 
 	return <div className="mt-3">
 		{
@@ -24,19 +17,4 @@ const CommentsList = ({productId, getComments, comments: { list, loading }}) => 
 	</div>
 }
 
-const mapStateToProps = ({comments}) => {
-	return {
-		comments
-	}
-}
-
-const mapDispatchToProps = (dispatch, {storeService}) => {
-	return bindActionCreators({
-		getComments: getComments(storeService)
-	}, dispatch)
-}
-
-export default compose(
-	WithStoreService(),
-	connect(mapStateToProps, mapDispatchToProps)
-)(CommentsList)
+export default CommentsList
